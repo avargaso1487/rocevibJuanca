@@ -55,23 +55,8 @@ class Tree_Model
 				"text"=>$fila['men_titulo'],
 				"url"=>$fila['men_url']				
 				));
-		}
-		echo '<div class="user-panel">
-            <div class="pull-left image">
-              <img src="../../assets/dist/img/user1-160x160.jpg" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-              <p>'; echo $_SESSION['usuarioNombre'].' '.$_SESSION['usuarioApPaterno']; echo '</p>
-              <a href="#"><i class="fa fa-circle text-success"></i> En línea</a>
-            </div>
-          </div>
-
-          <!-- /.search form -->
-          <!-- sidebar menu: : style can be found in sidebar.less -->
-          <ul class="sidebar-menu">
-            <li class="header">MENU</li>
-            ';
-
+		}		
+//.$datos[$i]['text'].
 		$padre=0;
 		$vinculo=0;
 		$estado=0;		
@@ -80,14 +65,25 @@ class Tree_Model
         	$padre= $datos[$i]['idParent'];
         	if($padre==0 && $datos[$i]['est']==0)
         	{
-        		$vinculo=$datos[$i]['id'];
-        		echo '
-        			<li class="treeview active">
-              		<a href="#">                	
-                	<span>'.$datos[$i]['text'].'</span>
-                	<i class="fa fa-angle-left pull-right"></i>
-              					</a>
-              					<ul class="treeview-menu">';
+        		$vinculo=$datos[$i]['id'];            
+            if($datos[$i]['text'] == $this->param['grupo'])
+              echo '<li class="open">';
+            else
+              echo '<li class="">';
+        		echo '                      
+                <a href="#" class="dropdown-toggle">
+                  <i class="menu-icon fa fa-list-alt"></i>
+                  <span class="menu-text">
+                    '.$datos[$i]['text'].'
+                  </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">';
+
                 $datos[$i]['est']=1;
                 for($j=0; $j<count($datos);$j++)
                 {
@@ -96,9 +92,17 @@ class Tree_Model
                 	{
                 		if($datos[$j]['idParent']==$vinculo)
                 		{
-                			echo '
-                				<li>
-                				<a href="'.$datos[$j]['url'].'"><i class="fa fa-circle-o"></i> '.$datos[$j]['text'].'</a></li>
+                      if($datos[$j]['text'] == $this->param['tarea'])
+                        echo '<li class="active">';
+                      else
+                        echo '<li class="">';
+                			echo '                				
+                				<a href="'.$datos[$j]['url'].'">
+                          <i class="menu-icon fa fa-caret-right"></i>
+                          '.$datos[$j]['text'].'
+                      </a>
+                      <b class="arrow"></b>                           
+                  </li>
               					';
               					$datos[$j]['est']=1;
                 		}
@@ -114,26 +118,3 @@ class Tree_Model
 	}
 }
  ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

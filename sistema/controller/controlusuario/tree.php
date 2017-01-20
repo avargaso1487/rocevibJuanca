@@ -8,6 +8,9 @@ $param['param_usuUsuario']='';
 $param['param_usuClave']='';
 $param['param_usuId']='';
 
+$param['grupo']='';
+$param['tarea']='';
+
 if (isset($_POST['param_opcion']))
     $param['param_opcion'] = $_POST['param_opcion'];
 
@@ -16,6 +19,15 @@ if(isset($_SESSION['usuario']))
 
 if(isset($_SESSION['idusuario']))
     $param['param_usuId'] = $_SESSION['idusuario'];    
+
+
+if(isset($_POST['grupo']))
+    $param['grupo'] = $_POST['grupo'];
+
+if(isset($_POST['tarea']))
+    $param['tarea'] = $_POST['tarea'];    
+
+//print_r($param);
 
 $Tree = new Tree_Model();
 echo $Tree->gestionar($param);

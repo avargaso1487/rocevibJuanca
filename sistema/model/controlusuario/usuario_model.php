@@ -188,15 +188,15 @@ class Usuario_model{
     	$this->prepararConsultaUsuario('opc_usuario_listar');    	
     	while($row = mysqli_fetch_row($this->result)){
 			echo '<tr>					
-					<td style="font-size: 12px; height: 10px; width: 4%;">'.$row[0].'</td>					
-					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[1].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[3].'</td>
-					<td syle="height: 10px; width: 5%;">
+					<td style="font-size: 12px; height: 10px; width: 5%;">'.$row[0].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 25%;">'.$row[1].'</td>
+					<td style="font-size: 12px; height: 10px; width: 25%;">'.$row[2].'</td>
+					<td style="font-size: 12px; height: 10px; width: 25%;">'.$row[3].'</td>
+					<td syle="text-align: center; height: 10px; width: 7%;">
 					<a class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-pencil" title="Editar" onclick="editar('.$row[0].');" /></span></a>
 								
 					</td>
-					<td syle="height: 10px; width: 5%;">
+					<td syle="height: 10px; width: 7%;">
 						<a id="eliminar_usuario" class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-remove-circle" title="Eliminar" onclick="eliminar('.$row[0].');"/></span></a>				
 					</td>					
 				</tr>';

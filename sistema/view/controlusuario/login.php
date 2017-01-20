@@ -15,16 +15,9 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../../assets_login/bootstrap/css/bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../assets/dist/css/AdminLTE.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="../../assets/plugins/iCheck/square/blue.css">
-
+    <link rel="stylesheet" href="../../assets_login/dist/css/AdminLTE.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -56,22 +49,10 @@
               <input type="submit" value="Ingresar" class="btn btn-primary btn-block btn-flat">
             </div><!-- /.col -->
           </div>
-        </form>
-        
-       <!-- <a href="registrar.php" class="text-center">Registrarme</a> -->
+        </form>              
 
       </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
-
-    <!-- jQuery 2.1.4 -->
-    <script src="../../assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <!-- iCheck -->
-    <script src="../../assets/plugins/iCheck/icheck.min.js"></script>
-
-      
-
+    </div><!-- /.login-box -->    
   </body>
 </html>
 <?php } ?>
