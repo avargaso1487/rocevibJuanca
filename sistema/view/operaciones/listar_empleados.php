@@ -15,6 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="../../default/assets/ico/favicon.png">
     <title>ROCEVIB HOTEL</title>
+    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -123,7 +124,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="blue bigger">Registro de Empleadoss</h4>
+                      <h4 class="blue bigger">Registro de Empleados</h4>
                     </div>
 
                     <div class="modal-body">
