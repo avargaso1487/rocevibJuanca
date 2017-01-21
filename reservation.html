@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Reservas | ROCEVIB</title>
+
+
+
+
+    <!-- Bootstrap-datepicker -->
+    <link rel="stylesheet" href="assets/css/datepicker.css">
+
+
+     <!--
+    <script src="google-code-prettify/prettify.js"></script>
+    <script src="jquery/jquery.js"></script>
+    <link href="google-code-prettify/prettify.css" rel="stylesheet">-->
+
+
+    <!-- core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/prettyPhoto.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="assets/images/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/images/ico/apple-touch-icon-57-precomposed.png">
+
+
+</head><!--/head-->
+
+<body>
+
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-4">
+                       
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
+                       <div class="social">
+                            <ul class="social-share">
+                                
+                                <li><div class="top-number"><p><i class="fa fa-phone"></i>  +51 044 322 165 &nbsp; </p></div></li>
+                                <li><div class="top-number"><p><i class="fa fa-mobile-phone"></i>  +51 949 970 872</p></div></li>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="sistema/index.php"><i class="fa fa-sign-in"></i></a></li>
+                            </ul>
+                           <!--<div class="search">
+                                <form role="form">
+                                    <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                                    <i class="fa fa-search"></i>
+                                </form>
+                           </div>-->
+                       </div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="logo"></a>
+                </div>
+                
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Inicio</a></li>
+                        <!--<li><a href="about-us.html">About Us</a></li>-->
+                        <li><a href="services.html">Servicios</a></li>
+                        <li><a href="portfolio.html">Galería</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Habitaciones <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="simple.html">Simple</a></li>
+                                <li><a href="matrimonial.html">Matrimonial</a></li>
+                                <li><a href="doble.html">Doble</a></li>
+                                <li><a href="triple.html">Triple</a></li>
+                                <li><a href="suite.html">Suite</a></li>
+                            </ul>
+                        </li>
+                        <li class="active"><a href="reservation.html">Reservas</a></li> 
+                        <li><a href="contact-us.html">Contacto</a></li>                         
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+        
+    </header><!--/header-->
+
+
+
+   <section id="blog" class="container">
+        <div class="center">
+            <h2>¡Reserva una habitación!</h2>
+            <p class="lead">El depósito se deberá realizar en cualquiera de las siguientes cuentas:<br>
+                <li><b>BANCO CONTINENTAL (Cuenta de ahorros): 0011-0254-03-0200270748 (Eventos Empresariales ROCEVIB E.I.R.L.)</b></li>               
+                <li><b>BANCO DE CRÉDITO DEL PERÚ (Cuenta corriente): 570-2371360005 (Cód. Interbancario: 002570002371360005-06</li></b>
+                </p>
+            <p class="lead">Tan solo con dejar tus datos, adjuntar el voucher del depósito y tu reserva será realizada.</p>
+        </div>
+
+    </section><!--/container-->
+
+        <!--Formulario-->
+    <section id="feature" >
+        <div class="row contact-wrap"> 
+
+            <!--Formulario-->
+            <form  class="contact-form" enctype="multipart/form-data" action="sendemail_reserva.php" method="post">
+          
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        <h2>DATOS PERSONALES</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombres *</label>
+                        <input type="text" name="nombres" class="form-control" required="required" placeholder="Nombres">
+                    </div>
+                    <div class="form-group">
+                        <label>DNI *</label>
+                        <input type="text" name="dni" class="form-control" required="required" placeholder="DNI">
+                    </div>
+                    <div class="form-group">
+                        <label>Celular</label>
+                        <input type="text" class="form-control" name="celular" placeholder="Celular">
+                    </div>
+                </div>
+
+
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <h3>&nbsp;</h3>                            
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos *</label>
+                        <input type="text"  placeholder="Apellidos" name="apellidos" class="form-control" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" placeholder="e-mail" name="email" class="form-control" required="required">
+                    </div>                  
+                    <div class="form-group">
+                        <label>Empresa</label>
+                        <input type="text" class="form-control" name="empresa" placeholder="Empresa">
+                    </div>
+                    <div class="form-group">
+                        <h3>&nbsp;</h3>                            
+                    </div>
+                </div>
+
+
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        <h2>DATOS DE LA RESERVA</h2>
+                    </div>
+                    
+                        <div class="form-group col-sm-6">
+                            <label> Fecha Entrada * </label>
+                            <input  type="text" class="form-control" placeholder="Entrada(dd/mm/aaaa)"  id="fEntrada" name="fEntrada">
+
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label> Fecha Salida * </label>
+                            <input  type="text" class="form-control" placeholder="Salida(dd/mm/aaaa)""  id="fsalida" name="fsalida">
+
+                        </div>     
+                      
+                        <div>
+                            <div class="form-group col-sm-4">
+                                <label>H. Simple</label>
+                                <input type="number" class="form-control" name="hsimple" placeholder="#Simple">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>H. Matrimonial</label>
+                                <input type="Number" class="form-control" name="hmatrimonial" placeholder="#Matrimonial">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>H. Doble</label>
+                                <input type="number" name="hdoble" class="form-control" placeholder="#Doble">
+                            </div>
+                        </div>                  
+                        <div>
+                            <div class="form-group col-sm-4">
+                                <label>H. Triple</label>
+                                <input type="Number" class="form-control" name="htriple" placeholder="#Triple">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>Suite</label>
+                                <input type="number" name="hsuite" class="form-control" placeholder="#Suite">
+                            </div>                            
+                        </div>
+
+                </div>
+
+                <div class="col-sm-5">
+                <BR><BR><BR>
+                    <div class="form-group">
+                        <label>Subir comprobante* </label>
+                        <input type="file" name="archivo" class="form-control">
+                    </div>                           
+                    <div class="form-group">
+                        <button type="submit" name="reserva" class="btn btn-primary btn-lg" required="required"> ¡Reservar ahora! </button>
+                    </div>
+                </div>
+
+            </form> 
+        </div><!--/.row-->
+    </section><!--/feature-->
+
+
+
+    <section id="bottom">
+        <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+            
+        --></div>
+    </section><!--/#bottom-->
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    
+                    Elaborado por <img src="assets/images/st+.png"> <a style="color:skyblue;" href="http://www.facebook.com/sodatechplus"> SodaTech+ </a>
+                &nbsp &nbsp| &nbsp &nbsp    Hotel ROCEVIB ® 2017. 
+                    
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="services.html">Servicios</a></li>
+                        <li><a href="portfolio.html">Galería</a></li>
+                        <li><a href="reservation.html">Reservaciones</a></li>
+                        <li><a href="contact-us.html">Contáctanos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.prettyPhoto.js"></script>
+    <script src="assets/js/jquery.isotope.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+
+    <!--<script src="assets/js/jquery-1.9.1.min.js"></script>-->
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+        <script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
+                
+                $('#fEntrada').datepicker({
+                    format: "dd/mm/yyyy"
+                });  
+
+                $('#fsalida').datepicker({
+                    format: "dd/mm/yyyy"
+                });  
+            
+            });
+        </script>
+
+</body>
+</html>
