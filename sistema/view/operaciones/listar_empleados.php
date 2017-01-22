@@ -3,17 +3,21 @@
   if (!isset($_SESSION['usuario']))
   {
     header("Location:view/controlusuario/login.php");
-  } else {
+  } 
+  else 
+  {
+    date_default_timezone_set('America/Lima');
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="../../../assets/ico/favicon.png">
+    <link rel="shortcut icon" href="../../default/assets/ico/favicon.png">
     <title>ROCEVIB HOTEL</title>
+    
     <!-- Tell the browser to be responsive to screen width -->
-     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="../default/assets/css/bootstrap.min.css" />
@@ -31,10 +35,9 @@
     <style type="text/css">
         .datepicker{z-index:1151 !important;}
     </style>        
-          
   </head>
   
- <body class="no-skin">
+  <body class="no-skin">
     <?php 
     require('../sup_layout.php');
      ?>
@@ -73,7 +76,7 @@
                             <li>
                                 <i class="ace-icon fa fa-home home-icon"></i>Administrador
                             </li>
-                            <li><a href="listar_habitaciones.php">Habitaciones</a></li>
+                            <li><a href="listar_empleados.php">Empleados</a></li>
                             <li>
                                 <span class="invoice-info-label">Fecha:</span>
                                 <span class="blue"><?php echo date('d-m-Y'); ?></span>
@@ -85,13 +88,13 @@
           <div class="page-content">          
             <div class="page-header">
               <h1>
-                Habitaciones Registradas
+                Empleados Registrados
               </h1>
             </div><!-- /.page-header -->
             <div class="row">
               <div class="col-md-12">               
                 <div class="table-header">
-                  HABITACIONES &nbsp;&nbsp;
+                  EMPLEADOS &nbsp;&nbsp;
                   <a href='#modal-form' data-toggle='modal' class='white' onclick="limpiar();">
                               <i class='ace-icon fa fa-plus-circle bigger-150'></i>
                           </a>
@@ -100,12 +103,12 @@
                   <table id="example" class="table table-striped table-bordered">
                     <thead>                     
                             <tr>
-                                 <th style="font-size: 12px; height: 10px; width: 4%;">ID</th>
-                                <th style="font-size: 12px; height: 10px; width: 20%;">Descripción</th> 
-                                <th style="font-size: 12px; height: 10px; width: 15%;">Tipo de Habitación</th>
-                                <th style="font-size: 12px; height: 10px; width: 15%;">Estado</th>
-                                <th style="font-size: 12px; height: 10px; width: 5%;">Editar</th>
-                                <th style="font-size: 12px; height: 10px; width: 5%;">Eliminar</th>     
+                                <th style="font-size: 12px; height: 10px; width: 5%;">ID</th>
+                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Nombres</th> 
+                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Paterno</th>
+                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Materno</th>
+                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Editar</th>
+                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Eliminar</th>                
                             </tr>                      
                     </thead>
                     <tbody id="cuerpoTabla">                                  
@@ -120,7 +123,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="blue bigger">Registro de Habitaciones</h4>
+                      <h4 class="blue bigger">Registro de Empleados</h4>
                     </div>
 
                     <div class="modal-body">
@@ -361,7 +364,7 @@
     <script src="../default/assets/js/ace-elements.min.js"></script>
     <script src="../default/assets/js/ace.min.js"></script>
         
-    <script src="../default/js/listar_habitaciones.js"></script>
+    <script src="../default/js/listar_empleados.js"></script>
 
     <script type="text/javascript">           
           function solonumeros(e) {

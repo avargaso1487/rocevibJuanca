@@ -2,18 +2,19 @@ var idecito=0;
 
 window.onload = function(){
 	$('#example').DataTable();
-	mostrarMenu();
+	comboEmpresa();
 	mostrarDatos();	
+	mostrarMenu();
 }
 
 $(function() {
-	$('#new_usuario').on('click', function(){
+	$('#new_huesped').on('click', function(){
 		$('#modalUsuario').modal({
 			show:true,
 			backdrop:'static',
 		});
-		$('#cabeceraRegistro').html(" - NUEVO EMPLEADO - ");
-		$('#param_opcion').val('nuevoUsuario1');
+		$('#cabeceraRegistro').html(" - NUEVO HUÉSPED - ");
+		$('#param_opcion').val('nuevoUsuario');
 		$('#param_nombres').val('');
 		$('#param_paterno').val('');
 		$('#param_materno').val('');
@@ -22,7 +23,7 @@ $(function() {
 		$('#param_celular').val('');
 		$('#param_usuario').val('');
 		$('#param_clave').val('');
-		$('#param_empresa').val('');
+		
 	});
 
 	$('#registroUsuario').on('click', function(){
@@ -37,12 +38,10 @@ $(function() {
 		var usuario = $('#param_usuario').val();
 		var clave = $('#param_clave').val();
 		$('#param_id').val(idecito);
-		//alert(idecito);
-		//alert(nombres+paterno+materno+dni+direccion+celular+usuario+clave);
 
         
-		if (dni.length == 0 || paterno.length == 0 || materno.length == 0 || nombres.length == 0 || usuario.length == 0 || clave.length == 0 ) {           
-            $("#mensaje").html('<p class="alert alert-danger text-center"> Ingrese todos los datos.</p>').show(200).delay(3500).hide(200);
+		if (dni.length == 0 || paterno.length == 0 || materno.length == 0 || nombres.length == 0 ) {           
+            $("#mensaje").html('<p class="alert alert-danger text-center"> Por favor, ingrese todos los datos.</p>').show(200).delay(3500).hide(200);
         } else {
         	$.ajax({
 		        type: 'POST',        
@@ -53,21 +52,19 @@ $(function() {
 		                        //window.location = "../index.php";
 		            $('#param_opcion').val('nuevoUsuario');
 					$("#param_dni").val('');
-					
+					$("#param_id").val('');
 					$("#param_paterno").val('');
 					$("#param_materno").val('');
 					$("#param_nombres").val('');
-					$("#param_usuario").val('');
-					$("#param_clave").val('');
 					$("#param_direccion").val('');
 					$("#param_celular").val('');
-
-					setTimeout("location.href='../operaciones/listar_empleados.php'",1000)        
+					$("#param_empresa").val('0');
+					setTimeout("location.href='../operaciones/listar_huespedes.php'",1000)        
 
 		        },
 		        error: function(data){
 		                   
-		        } 
+		         } 
 			});
         }
 		
@@ -75,7 +72,7 @@ $(function() {
 
 	$('#registroCancelar').on('click', function(){
 		//alert('HOLA Xd');
-		setTimeout("location.href='../operaciones/listar_empleados.php'",1)
+		setTimeout("location.href='../operaciones/listar_huespedes.php'",1)
 	});
 
 });
@@ -83,7 +80,7 @@ $(function() {
 function mostrarDatos(){
 	$.ajax({
 		type: 'POST',
-		data:{param_opcion: 'listarUsuario'},
+		data:{param_opcion: 'listarHuespedes'},
 		url: '../../controller/controlusuario/usuario.php',
 		success: function(respuesta){
 			$('#example').DataTable().destroy();
@@ -96,12 +93,11 @@ function mostrarDatos(){
 	});	
 }
 
-function editar(id){	
+function editarh(id){	
 	$('#param_id').val(id);
-	$('#param_nombres').val(param_nombres);
-	var param_opcion =	 'modificarUsuario';
+	var param_opcion = 'modificarUsuario';
 	idecito = id;
-	//var id = $("#param_id").val(objeto[0]);
+
 	$.ajax({
 		type: 'POST',
 		data:'param_opcion='+param_opcion+'&id='+id,
@@ -109,16 +105,16 @@ function editar(id){
 		success: function(data){
 			console.log(data);
 			$('#param_opcion').val('modificarUsuario');
-			$('#cabeceraRegistro').html("- EDITAR EMPLEADO -");		
+			$('#cabeceraRegistro').html("- EDITAR HUESPED - ");		
 		  	$('#modalUsuario').modal({
 		  		show:true,
 		  		backdrop:'static',
 		  	});
-			//objeto=JSON.parse(data);
-			//$("#param_id").val(objeto[0]);
-			//$("#param_nombres").val(objeto[1]);
-			//$("#param_paterno").val(objeto[2]);
-			//$("#param_materno").val(objeto[3]);		  	
+			objeto=JSON.parse(data);
+			$("#param_dni").val(objeto[0]);
+			$("#param_paterno").val(objeto[1]);
+			$("#param_materno").val(objeto[2]);
+			$("#param_nombres").val(objeto[3]);		  	
 		},
 		error: function(data){
 			
@@ -126,7 +122,7 @@ function editar(id){
 	});
 }
 
-function eliminar(id){	
+function eliminarh(id){	
 	
 	var param_opcion = 'eliminarUsuario';
 	var r = confirm("¿Esta seguro que desea eliminar esta información?");
@@ -144,10 +140,25 @@ function eliminar(id){
 		});
 	} else {
 	   mostrarDatos();
-	} 	
+	}
 }
 
 
+	function comboEmpresa(){ 	
+    var param_opcion = 'comboEmpresa'; 
+    $.ajax({
+        type: 'POST',        
+        data:'param_opcion='+param_opcion,
+        url: '../../controller/controlEmpresa/empresa.php',
+        success: function(data){
+            $('#param_empresa').html(data);         
+
+        },
+        error: function(data){
+                   
+        }
+    });    
+}
 
 function mostrarMenu()
 {

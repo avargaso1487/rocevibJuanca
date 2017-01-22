@@ -1,8 +1,7 @@
-var idecito=0;
-
 window.onload = function(){
-	$('#example').DataTable();
+	//comboEvento();
 	mostrarMenu();
+	$('#example').DataTable();
 	mostrarDatos();	
 }
 
@@ -12,37 +11,26 @@ $(function() {
 			show:true,
 			backdrop:'static',
 		});
-		$('#cabeceraRegistro').html(" - NUEVO EMPLEADO - ");
-		$('#param_opcion').val('nuevoUsuario1');
-		$('#param_nombres').val('');
-		$('#param_paterno').val('');
-		$('#param_materno').val('');
-		$('#param_dni').val('');
-		$('#param_direccion').val('');
-		$('#param_celular').val('');
-		$('#param_usuario').val('');
-		$('#param_clave').val('');
-		$('#param_empresa').val('');
+		$('#cabeceraRegistro').html(".:: Nuevo Usuario ::.");
+		$('#param_opcion').val('nuevoUsuario');
+		$("#param_dni").val('');
+		$("#param_paterno").val('');
+		$("#param_materno").val('');
+		$("#param_nombres").val('');
 	});
 
 	$('#registroUsuario').on('click', function(){
 		//alert('HOLA Xd');
-
 		var nombres = $('#param_nombres').val();
 		var paterno = $('#param_paterno').val();
 		var materno = $('#param_materno').val();
 		var dni = $('#param_dni').val();
 		var direccion = $('#param_direccion').val();
-		var celular = $('#param_celular').val();
-		var usuario = $('#param_usuario').val();
-		var clave = $('#param_clave').val();
-		$('#param_id').val(idecito);
-		//alert(idecito);
-		//alert(nombres+paterno+materno+dni+direccion+celular+usuario+clave);
-
+		var usuario = $('#param_usuUsuario').val();
+		var clave = $('#param_usuClave').val();
         
 		if (dni.length == 0 || paterno.length == 0 || materno.length == 0 || nombres.length == 0 || usuario.length == 0 || clave.length == 0 ) {           
-            $("#mensaje").html('<p class="alert alert-danger text-center"> Ingrese todos los datos.</p>').show(200).delay(3500).hide(200);
+            $("#mensaje").html('<p class="alert alert-danger text-center"> Por favor, ingrese todos los datos.</p>').show(200).delay(3500).hide(200);
         } else {
         	$.ajax({
 		        type: 'POST',        
@@ -53,15 +41,10 @@ $(function() {
 		                        //window.location = "../index.php";
 		            $('#param_opcion').val('nuevoUsuario');
 					$("#param_dni").val('');
-					
+					$("#param_id").val('');
 					$("#param_paterno").val('');
 					$("#param_materno").val('');
 					$("#param_nombres").val('');
-					$("#param_usuario").val('');
-					$("#param_clave").val('');
-					$("#param_direccion").val('');
-					$("#param_celular").val('');
-
 					setTimeout("location.href='../operaciones/listar_empleados.php'",1000)        
 
 		        },
@@ -83,7 +66,7 @@ $(function() {
 function mostrarDatos(){
 	$.ajax({
 		type: 'POST',
-		data:{param_opcion: 'listarUsuario'},
+		data:{param_opcion: 'listarHabitaciones'},
 		url: '../../controller/controlusuario/usuario.php',
 		success: function(respuesta){
 			$('#example').DataTable().destroy();
@@ -97,11 +80,8 @@ function mostrarDatos(){
 }
 
 function editar(id){	
-	$('#param_id').val(id);
-	$('#param_nombres').val(param_nombres);
-	var param_opcion =	 'modificarUsuario';
-	idecito = id;
-	//var id = $("#param_id").val(objeto[0]);
+	
+	var param_opcion = 'mostrar';
 	$.ajax({
 		type: 'POST',
 		data:'param_opcion='+param_opcion+'&id='+id,
@@ -109,16 +89,16 @@ function editar(id){
 		success: function(data){
 			console.log(data);
 			$('#param_opcion').val('modificarUsuario');
-			$('#cabeceraRegistro').html("- EDITAR EMPLEADO -");		
+			$('#cabeceraRegistro').html(".:: Modificar Usuario ::.");		
 		  	$('#modalUsuario').modal({
 		  		show:true,
 		  		backdrop:'static',
 		  	});
-			//objeto=JSON.parse(data);
-			//$("#param_id").val(objeto[0]);
-			//$("#param_nombres").val(objeto[1]);
-			//$("#param_paterno").val(objeto[2]);
-			//$("#param_materno").val(objeto[3]);		  	
+			objeto=JSON.parse(data);
+			$("#param_dni").val(objeto[0]);
+			$("#param_paterno").val(objeto[1]);
+			$("#param_materno").val(objeto[2]);
+			$("#param_nombres").val(objeto[3]);		  	
 		},
 		error: function(data){
 			
@@ -147,10 +127,8 @@ function eliminar(id){
 	} 	
 }
 
-
-
 function mostrarMenu()
-{
+{	
 	var grupo = document.getElementById('NombreGrupo').value;
     var tarea = document.getElementById('NombreTarea').value;
 

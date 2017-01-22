@@ -1,8 +1,4 @@
 <?php 
-
-
-
-
   include('../facturacion/parametros_factura.php');
   session_start();
 
@@ -509,32 +505,13 @@
     </script>
     <!-- Bootstrap 3.3.5 -->
       <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Morris.js charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <!-- Morris.js charts -->    
     <!--<script src="../../assets/plugins/morris/morris.min.js"></script>-->
 
     <!--Data Tables -->
     <script src="../../assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../../assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-
-    <!-- Sparkline -->
-    <script src="../../assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <!-- jvectormap -->
-    <script src="../../assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="../../assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="../../assets/plugins/knob/jquery.knob.js"></script>
-    <!-- daterangepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-    <script src="../../assets/plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- datepicker -->
-    <script src="../../assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <!-- Bootstrap WYSIHTML5 -->
-    <script src="../../assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-    <!-- Slimscroll -->
-    <script src="../../assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="../../assets/plugins/fastclick/fastclick.min.js"></script>
+        
     
 
     
@@ -549,20 +526,12 @@
           "autoWidth": true
         });
       });
-</script>
+    </script>
     
     <script src="../default/assets/js/jquery.2.1.1.min.js"></script>
     <script src="../default/assets/js/bootstrap.min.js"></script>
     <script src="../default/assets/js/jquery.dataTables.min.js"></script>
-    <script src="../default/assets/js/jquery.dataTables.bootstrap.min.js"></script>
-
-    <script src="../default/assets/js/bootstrap-datepicker.min.js"></script>
-    <script src="../default/assets/js/bootstrap-timepicker.min.js"></script>
-    <script src="../default/assets/js/moment.min.js"></script>
-    <script src="../default/assets/js/daterangepicker.min.js"></script>
-    <script src="../default/assets/js/bootstrap-datetimepicker.min.js"></script>
-
-
+    <script src="../default/assets/js/jquery.dataTables.bootstrap.min.js"></script>  
 
     <script src="../default/js/ventaTienda.js"></script>
     
@@ -570,21 +539,20 @@
     <!-- ace scripts -->
     <script src="../default/assets/js/ace-elements.min.js"></script>
     <script src="../default/assets/js/ace.min.js"></script>   
-    <script type="text/javascript">
-        
+
+    <!-- Validaciones solonumeros(), telefonovalidation(), sololetras() -->
+    <script type="text/javascript">        
           function solonumeros(e) {
               key = e.keyCode || e.which;
               teclado = String.fromCharCode(key);
               numeros = "0123456789";
               especiales = "8-37-38-46"
               teclado_especial=false;
-
               for (var i in especiales) {
                   if (key == especiales[i]) {
                       teclado_especial= true;
                   }
               }
-
               if (numeros.indexOf(teclado)==-1 && !teclado_especial) {
                   return false;
               }
@@ -603,7 +571,6 @@
              tecla = String.fromCharCode(key).toLowerCase();
              letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
              especiales = "8-37-39-46";
-
              tecla_especial = false
              for(var i in especiales){
                   if(key == especiales[i]){
@@ -611,12 +578,11 @@
                       break;
                   }
               }
-
               if(letras.indexOf(tecla)==-1 && !tecla_especial){
                   return false;
               }
           }
-      </script>
+    </script>
 
   </body>
 </html>

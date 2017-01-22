@@ -13,7 +13,7 @@
 					<a href="home.php" class="navbar-brand">
 						<small>						
 						<img src="../../../assets/ico/favicon.png" alt="">	
-							Hotel <b>ROCEVIB</b>
+							<b>ROCEVIB</b> HOTEL
 						</small>
 					</a>
 				</div>
