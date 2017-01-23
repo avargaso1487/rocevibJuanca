@@ -10,7 +10,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<div class="navbar-header pull-left">					
-					<a href="home.php" class="navbar-brand">
+					<a href="../controlusuario/principal.php" class="navbar-brand">
 						<small>						
 						<img src="../../../assets/ico/favicon.png" alt="">	
 							<b>ROCEVIB</b> HOTEL
@@ -56,7 +56,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="../../controller/controlusuario/cerrarsesion.php">
+									<a href="../../view/controlusuario/logout.php">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>

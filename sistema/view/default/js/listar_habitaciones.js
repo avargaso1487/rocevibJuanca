@@ -1,8 +1,6 @@
 window.onload = function(){
-	//comboEvento();
-	mostrarMenu();
-	$('#example').DataTable();
 	mostrarDatos();	
+	mostrarMenu();
 }
 
 $(function() {
@@ -69,12 +67,12 @@ function mostrarDatos(){
 		data:{param_opcion: 'listarHabitaciones'},
 		url: '../../controller/controlusuario/usuario.php',
 		success: function(respuesta){
-			$('#example').DataTable().destroy();
-			$('#cuerpoTabla').html(respuesta);
-			$('#example').DataTable();
+			$('#habs').DataTable().destroy();
+			$('#cuerpoHabs').html(respuesta);
+			$('#habs').DataTable();
 		},
 		error: function(respuesta){
-			$('#cuerpoTabla').html(respuesta);
+			$('#cuerpoHabs').html(respuesta);
 		}
 	});	
 }
@@ -128,7 +126,7 @@ function eliminar(id){
 }
 
 function mostrarMenu()
-{	
+{
 	var grupo = document.getElementById('NombreGrupo').value;
     var tarea = document.getElementById('NombreTarea').value;
 

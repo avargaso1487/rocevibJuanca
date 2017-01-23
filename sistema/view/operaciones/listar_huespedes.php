@@ -318,14 +318,14 @@
             </div><!-- /.col -->
           </div>
 
-                
+             <BR><BR><BR>     
         </div><!-- /.page-content -->             
         <div class="footer">
           <div class="footer-inner">
             <div class="footer-content">
               <span class="bigger-120">
-                <span class="blue bolder">BSE Events</span>
-                &copy; 2016
+                <span class="blue bolder">ROCEVIB</span>
+                &copy; 2017
               </span>           
             </div>
           </div>          

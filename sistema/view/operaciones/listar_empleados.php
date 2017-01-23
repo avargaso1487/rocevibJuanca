@@ -8,6 +8,8 @@
   {
     date_default_timezone_set('America/Lima');
 ?>
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,21 +17,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="../../default/assets/ico/favicon.png">
     <title>ROCEVIB HOTEL</title>
-    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="../default/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../default/assets/font-awesome/4.2.0/css/font-awesome.min.css" />
-
     <!-- text fonts -->
     <link rel="stylesheet" href="../default/assets/fonts/fonts.googleapis.com.css" />
-
     <!-- ace styles -->
     <link rel="stylesheet" href="../default/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
-
     <!-- ace settings handler -->
     <script src="../default/assets/js/ace-extra.min.js"></script>
     <style type="text/css">
@@ -37,29 +33,26 @@
     </style>        
   </head>
   
+
+  <!-- Cuerpo -->
   <body class="no-skin">
     <?php 
-    require('../sup_layout.php');
+    require('../sup_layout.php'); // Theme 
      ?>
 
     <div class="main-container" id="main-container">
       <script type="text/javascript">
         try{ace.settings.check('main-container' , 'fixed')}catch(e){}
       </script>
-
       <div id="sidebar" class="sidebar                  responsive">
         <script type="text/javascript">
           try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
         </script>       
-
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
           <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
         </div>
         <ul class="nav nav-list" id="permisos">
-        
         </ul><!-- /.nav-list -->
-
-
         <script type="text/javascript">
           try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
         </script>
@@ -73,16 +66,16 @@
             </script>
 
             <ul class="breadcrumb">
-                            <li>
-                                <i class="ace-icon fa fa-home home-icon"></i>Administrador
-                            </li>
-                            <li><a href="listar_empleados.php">Empleados</a></li>
-                            <li>
-                                <span class="invoice-info-label">Fecha:</span>
-                                <span class="blue"><?php echo date('d-m-Y'); ?></span>
-                            </li>                            
-                            
-                        </ul><!-- /.breadcrumb -->        
+              <li>
+                  <i class="ace-icon fa fa-home home-icon"></i>Administrador
+              </li>
+              <li><a href="listar_empleados.php">Empleados</a></li>
+              <li>
+                  <span class="invoice-info-label">Fecha:</span>
+                  <span class="blue"><?php echo date('d-m-Y'); ?></span>
+              </li>                            
+              
+            </ul><!-- /.breadcrumb -->        
           </div>
 
           <div class="page-content">          
@@ -92,6 +85,7 @@
               </h1>
             </div><!-- /.page-header -->
             <div class="row">
+
               <div class="col-md-12">               
                 <div class="table-header">
                   EMPLEADOS &nbsp;&nbsp;
@@ -99,17 +93,18 @@
                               <i class='ace-icon fa fa-plus-circle bigger-150'></i>
                           </a>
                 </div>
+
                 <div>
                   <table id="example" class="table table-striped table-bordered">
                     <thead>                     
-                            <tr>
-                                <th style="font-size: 12px; height: 10px; width: 5%;">ID</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Nombres</th> 
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Paterno</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Materno</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Editar</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Eliminar</th>                
-                            </tr>                      
+                      <tr>
+                        <th style="font-size: 12px; height: 10px; width: 5%;">ID</th>
+                        <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Nombres</th> 
+                        <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Paterno</th>
+                        <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Materno</th>
+                        <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Editar</th>
+                        <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Eliminar</th>                
+                      </tr>                      
                     </thead>
                     <tbody id="cuerpoTabla">                                  
                     </tbody>
@@ -117,7 +112,7 @@
                 </div>
 
 
-                
+              <!-- Modal Registro -->
               <div id="modal-form" class="modal fade" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -128,9 +123,12 @@
 
                     <div class="modal-body">
                       <div class="row">
-                      <form class="form-horizontal form-bordered" method="post" action="../../controller/controlMantenedores/ambiente_controller.php" onsubmit="return validarCampos()">
-                            
-                            
+                      <div id="mensaje">
+                      </div>
+
+                      <!--Formulario de Registro -->
+                      <form class="form-horizontal form-bordered" method="post" id="frm_nuevoEmpleado">
+
                             <div class="form-group">
                                     <label for="ruc" class="col-md-4 control-label">Nombres</label>
                                     <div class="col-md-7">
@@ -154,11 +152,10 @@
 
                                 </div>                              
                                 
-
                                 <div class="form-group">
-                                    <label for="nombreEmpresa" class="col-md-4 control-label">Dni</label>
+                                    <label for="nombreEmpresa" class="col-md-4 control-label">DNI</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="Nombre Dni" maxlength="8" onkeypress="return solonumeros(event)">
+                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="DNI o Carnet de Extranjería" maxlength="8">
                                     </div>
                                 </div>
 
@@ -190,144 +187,52 @@
                                     </div>
                                 </div>
 
-                            <div class="form-group">
-                                
-                                <div class="col-sm-1"></div>
-                                <input type="hidden" value="registrar" name="param_opcion">
-                                
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                  <center><button type="button" id="btn_cancelar_participante" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">Cancelar</button>
-                                    <input type="submit" value="Registrar" class="btn btn-primary mr-xs mb-sm buttonform" ></center>
+                                <div>
+                                <input type="hidden" id="param_id" name="param_id"><
                                 </div>
+                              <div class="form-group">
+                              <div class="col-md-12">
+                                <center>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="nuevoEmpleado">Registrar</button>
+                                  </center>
+                              </div>
                             </div>
                             </form>
 
                         </div>
-                      </div>
-
-                      
+                      </div>                      
                     </div>
                   </div>
                 </div><!-- PAGE CONTENT ENDS -->
 
 
+                <!--Fin de Modal Registro -->
 
 
 
 
-
-                <div id="modalEditarAmb" class="modal" tabindex="-1">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="blue bigger">Datos de Ambiente</h4>
-                      </div>
-
-                      <div class="modal-body">
-                        <div class="row">
-                          <form action="" method="POST" class="form-horizontal" id="form_nuevoUsuario">                                                                                 
-                            <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Nombres</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_nombres" name="param_nombres" placeholder="Ingrese Nombres">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Apellido Paterno</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_paterno" name="param_paterno" placeholder="Ingrese Apellido Paterno">
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="giro" class="col-md-4 control-label">Apellido Materno</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_materno" name="param_materno" placeholder="Ingrese Apellido Materno">
-                                    </div>
-
-                                </div>                              
-                                
-
-                                <div class="form-group">
-                                    <label for="nombreEmpresa" class="col-md-4 control-label">Dni</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="Nombre Dni" maxlength="8" onkeypress="return solonumeros(event)">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Dirección</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_direccion" name="param_direccion" placeholder="Ingrese Dirección">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Celular</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_celular" name="param_celular" placeholder="Ingrese número de celular">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Usuario</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="cel" id="param_usuario" name="param_usuario" placeholder="Ingrese usuario">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Contraseña</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_clave" name="param_clave" placeholder="Ingrese clave">
-                                    </div>
-                                </div>
-
-                            
-                            <div class="form-group">
-                                
-                                <div class="col-sm-1"></div>
-                                <input type="hidden" value="actualizar" name="param_opcion">
-                               <!--  <input type="hidden" dissabled="true" value="Mantenedores" id="NombreGrupo">
-                                <input type="hidden" dissabled="true" value="ambientes" id="NombreTarea"> -->
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <center><input type="submit" id="actualizar" value="Actualizar" class="btn btn-primary mr-xs mb-sm buttonform" ></center>
-                                </div>
-                            </div>
-                            </form>
 
               </div>
-              </div>
-
-                      
-              </div>
-              </div>
-              </div><!-- PAGE CONTENT ENDS -->
-                
-
-
-              </div>        
+                     
               <input type="hidden" dissabled="true" value="Administrador" id="NombreGrupo">
               <input type="hidden" dissabled="true" value="Listar Empleados" id="NombreTarea">     
-              <!-- FIN DE CONTENIDO DE PAGINA -->                                  
+              <!-- FIN DE CONTENIDO DE PAGINA -->   
+
+
             </div><!-- /.col -->
           </div>
 
+
+<BR><BR><BR>  
                 
         </div><!-- /.page-content -->             
         <div class="footer">
           <div class="footer-inner">
             <div class="footer-content">
               <span class="bigger-120">
-                <span class="blue bolder">BSE Events</span>
-                &copy; 2016
+                <span class="blue bolder">ROCEVIB</span>
+                &copy; 2017
               </span>           
             </div>
           </div>          

@@ -34,8 +34,10 @@ class Usuario_model{
 				echo $this->listarUsuario();
 				break;
 
-			case "nuevoUsuario1";
-				echo $this->nuevoUsuario1();
+
+		//Funciones Registro
+			case "nuevoEmpleado";
+				echo $this->nuevoEmpleado();
 				break;
 
 			case "nuevoUsuario";
@@ -44,12 +46,14 @@ class Usuario_model{
 
 
 
-			case "modificarUsuario";
-				echo $this->modificarUsuario();
+			case "editarEmpleado";
+				echo $this->editarEmpleado();
 				break;
 			case "eliminarUsuario";
 				echo $this->eliminarUsuario();
 				break;
+
+		//Funciones Listar
 			case "listarHuespedes";
 				echo $this->listarHuespedes();
 				break;
@@ -61,6 +65,9 @@ class Usuario_model{
 				break;
 			case "listarRegistro";
 				echo $this->listarRegistro();
+				break;
+			case "mostrarDetalle";
+				echo $this->mostrarDetalle();
 				break;
 		}
 	}
@@ -77,10 +84,10 @@ class Usuario_model{
 	{
 		$consultaSql = "call sp_control_usuario(";
 		$consultaSql.="'".$opcion."',";
-		$consultaSql.="'',";
+		$consultaSql.="'".$this->param['param_id2']."',";
 		$consultaSql.="'".$this->param['param_usuUsuario']."',";
 		$consultaSql.="'".$this->param['param_usuClave']."')";
-		//echo $consultaSql;		
+		echo $consultaSql;		
 		$this->result = mysqli_query($this->conexion,$consultaSql);
     }
 
@@ -162,8 +169,8 @@ class Usuario_model{
     }
 
 
-    function nuevoUsuario1() {
-		$this->prepararRegistroUsuario('opc_usuario_registrar1');
+    function nuevoEmpleado() {
+		$this->prepararRegistroUsuario('opc_nuevoEmpleado');
 		echo 1;
     }
 
@@ -174,9 +181,11 @@ class Usuario_model{
 
 
 
-	function modificarUsuario() {
-		$this->prepararRegistroUsuario('opc_usuario_modificar');
-		echo 1;
+	function editarEmpleado() {
+		$this->prepararConsultaUsuario('opc_empleado_buscar');
+		$row = mysqli_fetch_row($this->result);
+		echo $row;
+		
     }
 
     function eliminarUsuario() {
@@ -226,15 +235,14 @@ class Usuario_model{
     	$this->prepararConsultaUsuario('opc_habitaciones_listar');    	
     	while($row = mysqli_fetch_row($this->result)){
 			echo '<tr>					
-					<td style="font-size: 12px; height: 10px; width: 4%;">'.$row[0].'</td>					
-					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[1].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[3].'</td>
-					<td syle="height: 10px; width: 5%;">
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[0].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 50%;">'.$row[1].'</td>
+					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[2].'</td>
+					<td syle="height: 10px; width: 10%;">
 					<a class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-pencil" title="Editar" onclick="editar('.$row[0].');" /></span></a>
 								
 					</td>
-					<td syle="height: 10px; width: 5%;">
+					<td syle="height: 10px; width: 10%;">
 						<a id="eliminar_usuario" class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-remove-circle" title="Eliminar" onclick="eliminar('.$row[0].');"/></span></a>				
 					</td>					
 				</tr>';
@@ -265,21 +273,28 @@ class Usuario_model{
     	$this->prepararConsultaUsuario('opc_registro_listar');    	
     	while($row = mysqli_fetch_row($this->result)){
 			echo '<tr>					
-					<td style="font-size: 12px; height: 10px; width: 4%;">'.$row[0].'</td>					
-					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[1].'</td>
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[0].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 40%;">'.$row[1].'</td>
 					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>
 					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[3].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[4].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[5].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[6].'</td>
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[4].'</td>
 
-					<td syle="height: 10px; width: 5%;">
-					<a class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-pencil" title="Editar" onclick="editar('.$row[0].');" /></span></a>
-								
-					</td>
-					<td syle="height: 10px; width: 5%;">
-						<a id="eliminar_usuario" class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-remove-circle" title="Eliminar" onclick="eliminar('.$row[0].');"/></span></a>				
+					<td syle="height: 10px; width: 10%;">
+						<a id="eliminar_usuario" class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-file" title="Eliminar" onclick="mostrarDetalle('.$row[0].');"/></span></a>				
 					</td>					
+				</tr>';
+		}
+	}
+
+
+	function mostrarDetalle() {
+    	$this->prepararConsultaUsuario('opc_registroDetalle_listar');    	
+    	while($row = mysqli_fetch_row($this->result)){
+			echo '<tr>					
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[0].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 40%;">'.$row[1].'</td>
+					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>
+					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[3].'</td>				
 				</tr>';
 		}
 	}

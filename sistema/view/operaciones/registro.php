@@ -102,27 +102,26 @@
                               
                 <!-- PAGE CONTENT BEGINS -->
                 <div class="table-header">
-                  FACTURAS REGISTRADAS &nbsp;&nbsp;
+                  HUESPEDES REGISTRADOS &nbsp;&nbsp;
                   <a href='nuevo_registro.php'  class='white' >
                               <i class='ace-icon fa fa-plus-circle bigger-150'></i>
                           </a>
                         </div>
                 
                   <div>
-                    <table class="table table-striped table-bordered" id="tablaFacturas">
+                    <table class="table table-striped table-bordered" id="reg">
                       <thead>
                         <tr>
-                        <th style="text-align: center; font-size: 11px; height: 10px; width: 15%;">Código</th>
-                        <th style="text-align: center; font-size: 11px; height: 10px; width: 15%;">Cliente</th>
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Habitacion</th>
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Fecha Entrada</th> 
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Fecha Salida</th>  
+                        <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">ID</th>
+                        <th style="text-align: center; font-size: 11px; height: 10px; width: 40%;">Huésped</th>
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 15%;">Fecha Entrada</th> 
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 15%;">Fecha Salida</th>  
                                 <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Total</th>
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 15%;">Operaciones</th>
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Servicios</th>
                         </tr>
                       </thead>
 
-                      <tbody id="cuerpoFacturas">
+                      <tbody id="cuerpoReg">
                         
                         
                         
@@ -133,18 +132,19 @@
                   <div class="col-md-8 col-md-offset-2" id="detalle_factura">
                 
                 <div class="table-header">
-                  DETALLE DE FACTURA &nbsp;&nbsp;                 
+                  DETALLE DE SERVICIOS &nbsp;&nbsp;                 
                 </div>
                 <div>
-                  <table id="tablaDetalleFactura" class="table table-striped table-bordered">
+                  <table id="regDetalle" class="table table-striped table-bordered">
                     <thead>                     
                             <tr>                              
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Codigo</th>
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Descripción</th>  
-                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Importe</th> 
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">ID</th>
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 30%;">Descripción</th>  
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 10%;">Importe x Día</th> 
+                                <th style="text-align: center; font-size: 11px; height: 10px; width: 20%;">Comentarios</th> 
                             </tr>                      
                     </thead>
-                    <tbody id="cuerpoDetalleFactura">                                 
+                    <tbody id="cuerpoRegDetalle">                                 
                     </tbody>
                   </table>
                 </div><br><br>
@@ -159,13 +159,13 @@
     </div><!-- /.page-content -->
 
 
-
+<br><br><br>
     <div class="footer">
       <div class="footer-inner">
         <div class="footer-content">
             <span class="bigger-120">
-                <span class="blue bolder">BSE</span>
-                &copy; All Rights Reserved
+                <span class="blue bolder">ROCEVIB</span>
+                &copy; 2017
             </span>
 
             &nbsp;

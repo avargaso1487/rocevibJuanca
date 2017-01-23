@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-01-2017 a las 10:14:48
+-- Tiempo de generación: 23-01-2017 a las 01:11:21
 -- Versión del servidor: 5.6.17
 -- Versión de PHP: 5.5.12
 
@@ -96,29 +96,48 @@ IF ve_opcion='opc_listar_menu' THEN
     JOIN rol rol      ON rol.rol_id=perf.rol_id
     JOIN permiso perm ON perm.rol_id=rol.rol_id
     JOIN menu  men    ON men.men_id=perm.men_id
-    WHERE usu.idusuario=ve_usuId AND rol.rolActivo=1
+    WHERE usu.idusuario=ve_usuId AND rol.rolActivo=1 and men.men_estado=1
     ;
 END IF;
 
 IF ve_opcion = 'opc_usuario_listar' THEN            
-      SELECT idusuario, nombres, appaterno, apmaterno FROM usuario where idtipo=1;
+      SELECT idusuario, nombres, appaterno, apmaterno FROM usuario where idtipo=2;
     END IF;
   
 
 IF ve_opcion = 'opc_huesped_listar' THEN
-		SELECT idusuario, nombres, appaterno, apmaterno FROM usuario where idtipo=2;
+		SELECT idusuario, nombres, appaterno, apmaterno FROM usuario where idtipo=3;
+	END IF;
+    
+IF ve_opcion = 'opc_empleado_buscar' THEN
+		SELECT idusuario, nombres, appaterno, apmaterno FROM usuario where idusuario=ve_usuId;
 	END IF;
     
 IF ve_opcion = 'opc_habitaciones_listar' THEN
-		SELECT h.idhabitacion, h.descripcion, case when h.idTipoHab=1 then 'SIMPLE' when h.idTipoHab=2 then 'DOBLE' when h.idTipoHab=3 then 'TRIPLE' when h.idTipoHab=4 then 'SUITE JUNIOR' when h.idTipoHab=5 then 'ESTÁNDAR' end as Tipo_Habitacion,  case when h.idEstado=0 then 'SIN ESTADO' when h.idEstado=1 then 'LIBRE' when h.idEstado=2 then 'OCUPADA' end as idEstado FROM habitacion h where not idTipoHab=6;
-	END IF;
+		SELECT s.idservicio, s.descripcion, 
+		case 
+		when s.idEstado=1 then 'LIBRE' 
+		when s.idEstado=2 then 'OCUPADA' 
+		end 
+		as estado FROM servicios s
+		where idTipoServicio=1;
+			END IF;
     
 IF ve_opcion = 'opc_ambientes_listar' THEN
 		SELECT h.idhabitacion, h.descripcion, case when h.idEstado=0 then 'SIN ESTADO' when h.idEstado=1 then 'LIBRE' when h.idEstado=2 then 'OCUPADA' end as idEstado FROM habitacion h where idTipoHab=6;
 	END IF;
     
 IF ve_opcion = 'opc_registro_listar' THEN
-		SELECT r.idregistro, u.nombres, u.appaterno, u.apmaterno, h.descripcion, r.fechaIngreso, r.fechaSalida FROM registro r INNER JOIN habitacion h on h.idhabitacion = r.idhabitacion INNER JOIN usuario u on u.idusuario = r.idusuario;
+		SELECT r.idregistro, CONCAT(u.nombres, ' ',u.appaterno,' ', u.apmaterno), r.fechaIngreso, r.fechaSalida, r.total
+FROM registro r 
+INNER JOIN usuario u on u.idusuario = r.idusuario;
+	END IF;
+    
+IF ve_opcion = 'opc_registroDetalle_listar' THEN
+SELECT rd.idRegDetalle, s.descripcion, rd.precioxDia,rd.comentarios
+from reg_detalle rd
+inner join servicios s on s.idServicio = rd.idServicio
+where idRegistro=ve_usuId;
 	END IF;
 
 END$$
@@ -150,8 +169,10 @@ if opcion = 'opc_usuario_respuesta' THEN
       DELETE FROM usuario WHERE idusuario = id;
     END IF;
 
-   IF opcion = 'opc_usuario_registrar1' THEN  
-		INSERT INTO usuario(nombres, appaterno, apmaterno, dni, direccion, celular, usuario, clave, idtipo) VALUES (nombres, paterno, materno, dni, direccion,celular, usuario, clave, '1');
+   IF opcion = 'opc_nuevoEmpleado' THEN  
+	INSERT INTO 
+	usuario(nombres, appaterno, apmaterno, dni, direccion, celular, usuario, clave, idtipo) 
+	VALUES (nombres, paterno, materno, dni, direccion,celular, usuario, clave, '2');	
     END IF;
 
    IF opcion = 'opc_usuario_registrar2' THEN  
@@ -235,11 +256,11 @@ INSERT INTO `menu` (`men_id`, `men_idpadre`, `men_nombre`, `men_url`, `men_titul
 (1, NULL, 'folder', NULL, 'Administrador', 'img_computer', 1),
 (2, 1, 'lista_empleados', '../../view/operaciones/listar_empleados.php', 'Listar empleados', 'img_computer', 1),
 (3, 1, 'listar_huespedes', '../../view/operaciones/listar_huespedes.php', 'Listar huespedes', 'img_computer', 1),
-(4, 1, 'listar_habitaciones', '../../view/operaciones/listar_habitaciones.php\r\n', 'Listar habitaciones', 'img_computer', 1),
-(5, 1, 'listar_ambientes', '../../view/operaciones/listar_ambientes.php\r\n', 'Listar Ambientes', 'img_computer', 1),
+(4, 1, 'listar_habitaciones', '../../view/operaciones/listar_habs.php\r\n', 'Listar habitaciones', 'img_computer', 1),
+(5, 1, 'listar_ambientes', '../../view/operaciones/listar_ambientes.php\r\n', 'Listar Ambientes', 'img_computer', 0),
 (6, NULL, 'folder', NULL, 'Huésped', 'img_computer', 1),
 (7, 6, 'registrar_huesped', '../../view/operaciones/registro.php', 'Registrar', 'img_computer', 1),
-(8, 6, 'actualizar_datos', NULL, 'Actualizar', 'img_computer', 1),
+(8, 6, 'actualizar_datos', NULL, 'Actualizar', 'img_computer', 0),
 (9, 6, 'reservas', NULL, 'Reservar', 'img_computer', 1),
 (10, NULL, 'folder', NULL, 'Reportes', 'img_computer', 1),
 (11, 10, 'rep_huespedes', NULL, 'Reporte de huéspedes', 'img_computer', 1),
@@ -311,12 +332,10 @@ INSERT INTO `permiso` (`rol_id`, `men_id`) VALUES
 CREATE TABLE IF NOT EXISTS `registro` (
   `idregistro` int(11) NOT NULL AUTO_INCREMENT,
   `idusuario` int(11) DEFAULT NULL,
-  `idhabitacion` int(11) DEFAULT NULL,
   `fechaIngreso` datetime DEFAULT NULL,
   `fechaSalida` datetime DEFAULT NULL,
   `total` decimal(10,0) NOT NULL,
   PRIMARY KEY (`idregistro`),
-  KEY `FK_registro_habitacion` (`idhabitacion`),
   KEY `FK_registro_usuario` (`idusuario`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -324,34 +343,33 @@ CREATE TABLE IF NOT EXISTS `registro` (
 -- Volcado de datos para la tabla `registro`
 --
 
-INSERT INTO `registro` (`idregistro`, `idusuario`, `idhabitacion`, `fechaIngreso`, `fechaSalida`, `total`) VALUES
-(1, 3, 201, '2016-10-04 00:00:00', '2016-10-07 00:00:00', '65');
+INSERT INTO `registro` (`idregistro`, `idusuario`, `fechaIngreso`, `fechaSalida`, `total`) VALUES
+(1, 3, '2016-10-04 00:00:00', '2016-10-07 00:00:00', '65');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `registro_detalle`
+-- Estructura de tabla para la tabla `reg_detalle`
 --
 
-CREATE TABLE IF NOT EXISTS `registro_detalle` (
+CREATE TABLE IF NOT EXISTS `reg_detalle` (
   `idRegDetalle` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(100) NOT NULL,
-  `idservicio` int(11) NOT NULL,
   `idRegistro` int(11) NOT NULL,
+  `idServicio` int(11) NOT NULL,
+  `precioxDia` int(11) DEFAULT NULL,
+  `comentarios` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idRegDetalle`),
-  KEY `idServicio` (`idservicio`),
   KEY `idRegistro` (`idRegistro`),
-  KEY `idhabitacion` (`idservicio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  KEY `idServicio` (`idServicio`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcado de datos para la tabla `registro_detalle`
+-- Volcado de datos para la tabla `reg_detalle`
 --
 
-INSERT INTO `registro_detalle` (`idRegDetalle`, `descripcion`, `idservicio`, `idRegistro`) VALUES
-(1, 'Servicio de Cochera', 1, 1),
-(2, 'Servicio de Lavanderia', 2, 1),
-(3, 'Habitación Simple', 7, 1);
+INSERT INTO `reg_detalle` (`idRegDetalle`, `idRegistro`, `idServicio`, `precioxDia`, `comentarios`) VALUES
+(1, 1, 201, 80, NULL),
+(2, 1, 3, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -364,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `rol` (
   `rol_nombre` varchar(50) DEFAULT NULL,
   `rolActivo` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`rol_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `rol`
@@ -372,7 +390,8 @@ CREATE TABLE IF NOT EXISTS `rol` (
 
 INSERT INTO `rol` (`rol_id`, `rol_nombre`, `rolActivo`) VALUES
 (1, 'Administrador', 1),
-(2, 'Operador', 1);
+(2, 'Empleado', 1),
+(3, 'Huesped', 1);
 
 -- --------------------------------------------------------
 
@@ -386,61 +405,66 @@ CREATE TABLE IF NOT EXISTS `servicios` (
   `descripcion` varchar(100) DEFAULT NULL,
   `idEstado` int(1) NOT NULL,
   `tarifa` decimal(10,0) NOT NULL,
+  `idTipoServicio` int(11) DEFAULT NULL,
   PRIMARY KEY (`idServicio`),
   KEY `idTipoHab` (`descripcion`),
-  KEY `idEstado` (`idEstado`)
+  KEY `idEstado` (`idEstado`),
+  KEY `idTipoServicio` (`idTipoServicio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `servicios`
 --
 
-INSERT INTO `servicios` (`idServicio`, `servicio`, `descripcion`, `idEstado`, `tarifa`) VALUES
-(1, 'Cochera', 'Cochera', 1, '0'),
-(2, 'Lavandería', 'Lavandería', 1, '0'),
-(3, 'Desayuno', 'Desayuno', 1, '0'),
-(4, 'Consumo', 'Consumo', 1, '0'),
-(101, 'Cochera', '6', 1, '0'),
-(102, 'Sala Hall', 'Sala Hall', 0, '0'),
-(103, 'Almacén', 'Almacén', 0, '0'),
-(104, 'Comedor', '6', 0, '0'),
-(105, 'Cocina', '6', 0, '0'),
-(201, 'Habitación 201', 'Habitación 201 - Habitación Simple', 1, '0'),
-(202, 'Habitación 202', 'Habitación 202 - Suite Junior', 1, '0'),
-(203, 'Habitación 203', 'Habitación 203 - Habitación Matrimonial', 1, '0'),
-(204, 'Habitación 204', 'Habitación 204 - Habitación Matrimonial', 1, '0'),
-(205, 'Habitación 205', 'Habitación 205 - Habitación Matrimonial', 1, '0'),
-(301, 'Habitación 301', 'Habitación 301 - Habitación Simple', 1, '0'),
-(302, 'Habitación 302', 'Habitación 302 - Habitación Simple', 1, '0'),
-(303, 'Habitación 303', 'Habitación 303 - Habitación Doble', 1, '0'),
-(304, 'Habitación 304', 'Habitación 304 - Habitación Simple', 1, '0'),
-(305, 'Habitación 305', 'Habitación 305 - Habitación Doble', 1, '0'),
-(401, 'Habitación 401', 'Habitación 404 - Habitación Triple', 1, '0'),
-(402, 'Habitación 402', 'Habitación 402 - Habitación Simple', 1, '0'),
-(403, 'Habitación 403', 'Habitación 403 - Habitación Simple', 1, '0'),
-(404, 'Habitación 404', 'Habitación 404 - Habitación Simple', 1, '0'),
-(405, 'Habitación 405', 'Habitación 405 - Habitación Simple', 1, '0'),
-(501, 'Cuarto de Trabajadores', '6', 0, '0');
+INSERT INTO `servicios` (`idServicio`, `servicio`, `descripcion`, `idEstado`, `tarifa`, `idTipoServicio`) VALUES
+(1, 'Cochera', 'Cochera Interior', 1, '0', 2),
+(2, 'Lavandería', 'Lavandería', 1, '10', 2),
+(3, 'Desayuno', 'Desayuno', 1, '5', 2),
+(4, 'Consumo', 'Consumo', 1, '0', 2),
+(5, 'Cochera', 'Cochera Exterior', 1, '0', 2),
+(102, 'Sala Hall', 'Sala Hall', 0, '0', 3),
+(103, 'Almacén', 'Almacén', 0, '0', 3),
+(104, 'Comedor', 'Comedor', 0, '0', 3),
+(105, 'Cocina', 'Cocina', 0, '0', 3),
+(201, 'Habitación 201', 'Habitación 201 - Habitación Simple', 1, '80', 1),
+(202, 'Habitación 202', 'Habitación 202 - Suite Junior', 1, '130', 1),
+(203, 'Habitación 203', 'Habitación 203 - Habitación Matrimonial', 1, '100', 1),
+(204, 'Habitación 204', 'Habitación 204 - Habitación Matrimonial', 1, '100', 1),
+(205, 'Habitación 205', 'Habitación 205 - Habitación Matrimonial', 1, '100', 1),
+(301, 'Habitación 301', 'Habitación 301 - Habitación Simple', 1, '80', 1),
+(302, 'Habitación 302', 'Habitación 302 - Habitación Simple', 1, '80', 1),
+(303, 'Habitación 303', 'Habitación 303 - Habitación Doble', 1, '130', 1),
+(304, 'Habitación 304', 'Habitación 304 - Habitación Simple', 1, '80', 1),
+(305, 'Habitación 305', 'Habitación 305 - Habitación Doble', 1, '130', 1),
+(401, 'Habitación 401', 'Habitación 404 - Habitación Triple', 1, '160', 1),
+(402, 'Habitación 402', 'Habitación 402 - Habitación Simple', 1, '80', 1),
+(403, 'Habitación 403', 'Habitación 403 - Habitación Simple', 1, '80', 1),
+(404, 'Habitación 404', 'Habitación 404 - Habitación Simple', 1, '80', 1),
+(405, 'Habitación 405', 'Habitación 405 - Habitación Simple', 1, '80', 1),
+(501, 'Cuarto de Trabajadores', 'Cuarto de Empleados', 0, '0', 5);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo_usuario`
+-- Estructura de tabla para la tabla `tipo_servicio`
 --
 
-CREATE TABLE IF NOT EXISTS `tipo_usuario` (
-  `idtipo` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`idtipo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+CREATE TABLE IF NOT EXISTS `tipo_servicio` (
+  `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) NOT NULL,
+  PRIMARY KEY (`idTipoServicio`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Volcado de datos para la tabla `tipo_usuario`
+-- Volcado de datos para la tabla `tipo_servicio`
 --
 
-INSERT INTO `tipo_usuario` (`idtipo`, `descripcion`) VALUES
-(1, 'Empleado'),
-(2, 'Huesped');
+INSERT INTO `tipo_servicio` (`idTipoServicio`, `descripcion`) VALUES
+(1, 'habitacion'),
+(2, 'ambiente'),
+(3, 'servicio'),
+(4, 'vip'),
+(5, 'otro');
 
 -- --------------------------------------------------------
 
@@ -463,7 +487,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `FK_usuario_empresa` (`idEmpresa`),
   KEY `FK_usuario_tipo_usuario` (`idtipo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -472,10 +496,10 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 INSERT INTO `usuario` (`idusuario`, `nombres`, `appaterno`, `apmaterno`, `dni`, `direccion`, `celular`, `usuario`, `clave`, `idtipo`, `idEmpresa`) VALUES
 (1, 'Juan Carlos', 'Cabrera', 'Díaz', '72543150', 'Trujillo', '963335717', 'admin', '123123', 1, NULL),
 (2, 'Nombre', 'Paterno', 'Materno', '72543150', 'direccion', 'celular', 'usuario', 'clave', 1, NULL),
-(3, 'Huesped', 'Echevarria', 'Pinedo', NULL, NULL, NULL, NULL, NULL, 2, NULL),
-(5, '11', '11', '11', '11', '11', '11', '11', '11', 1, NULL),
-(9, 'Olinda', 'Goicochea', 'Mauricio', '75694930', 'Av. 28 de Julio 703', '993011793', '', '', 2, 1),
-(19, '', '', '', '', '', '', '', '', 2, 1);
+(3, 'Huesped', 'Echevarria', 'Pinedo', NULL, NULL, NULL, NULL, NULL, 1, NULL),
+(9, 'Olinda', 'Goicochea', 'Mauricio', '75694930', 'Av. 28 de Julio 703', '993011793', '', '', 3, 1),
+(20, 'Matilde', 'Rojas', 'GarcÃ­a', '17817510', 'Trujillo', '987325625', 'mrojas', 'mrojas', 2, NULL),
+(21, 'Edwin', 'Sakin', 'Ortega', '74568987', 'Bagua Chica', '978564236', 'esakin', 'esakin', 2, NULL);
 
 --
 -- Restricciones para tablas volcadas
@@ -499,27 +523,28 @@ ALTER TABLE `permiso`
 -- Filtros para la tabla `registro`
 --
 ALTER TABLE `registro`
-  ADD CONSTRAINT `FK_registro_habitacion` FOREIGN KEY (`idhabitacion`) REFERENCES `servicios` (`idServicio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_registro_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `registro_detalle`
+-- Filtros para la tabla `reg_detalle`
 --
-ALTER TABLE `registro_detalle`
-  ADD CONSTRAINT `registro_detalle_ibfk_2` FOREIGN KEY (`idRegistro`) REFERENCES `registro` (`idregistro`);
+ALTER TABLE `reg_detalle`
+  ADD CONSTRAINT `reg_detalle_ibfk_2` FOREIGN KEY (`idServicio`) REFERENCES `servicios` (`idServicio`),
+  ADD CONSTRAINT `reg_detalle_ibfk_1` FOREIGN KEY (`idRegistro`) REFERENCES `registro` (`idregistro`);
 
 --
 -- Filtros para la tabla `servicios`
 --
 ALTER TABLE `servicios`
+  ADD CONSTRAINT `serv_tipoServ` FOREIGN KEY (`idTipoServicio`) REFERENCES `tipo_servicio` (`idTipoServicio`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `servicios_ibfk_2` FOREIGN KEY (`idEstado`) REFERENCES `estado` (`idEstado`);
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `FK_usuario_empresa` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_usuario_tipo_usuario` FOREIGN KEY (`idtipo`) REFERENCES `tipo_usuario` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_usuario_tipo_usuario` FOREIGN KEY (`idtipo`) REFERENCES `rol` (`rol_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_usuario_empresa` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

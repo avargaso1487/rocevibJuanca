@@ -3,17 +3,21 @@
   if (!isset($_SESSION['usuario']))
   {
     header("Location:view/controlusuario/login.php");
-  } else {
+  } 
+  else 
+  {
+    date_default_timezone_set('America/Lima');
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="../../../assets/ico/favicon.png">
+    <link rel="shortcut icon" href="../../default/assets/ico/favicon.png">
     <title>ROCEVIB HOTEL</title>
     <!-- Tell the browser to be responsive to screen width -->
-     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="../default/assets/css/bootstrap.min.css" />
@@ -30,11 +34,11 @@
     <script src="../default/assets/js/ace-extra.min.js"></script>
     <style type="text/css">
         .datepicker{z-index:1151 !important;}
-    </style>        
+    </style>
+
           
   </head>
-  
- <body class="no-skin">
+  <body class="no-skin">
     <?php 
     require('../sup_layout.php');
      ?>
@@ -73,7 +77,7 @@
                             <li>
                                 <i class="ace-icon fa fa-home home-icon"></i>Administrador
                             </li>
-                            <li><a href="listar_habitaciones.php">Habitaciones</a></li>
+                            <li><a href="listar_habitaciones.php">habitaciones</a></li>
                             <li>
                                 <span class="invoice-info-label">Fecha:</span>
                                 <span class="blue"><?php echo date('d-m-Y'); ?></span>
@@ -85,7 +89,7 @@
           <div class="page-content">          
             <div class="page-header">
               <h1>
-                Habitaciones Registradas
+                Habitaciones
               </h1>
             </div><!-- /.page-header -->
             <div class="row">
@@ -97,18 +101,17 @@
                           </a>
                 </div>
                 <div>
-                  <table id="example" class="table table-striped table-bordered">
+                  <table id="habs" class="table table-striped table-bordered">
                     <thead>                     
                             <tr>
-                                 <th style="font-size: 12px; height: 10px; width: 4%;">ID</th>
-                                <th style="font-size: 12px; height: 10px; width: 20%;">Descripción</th> 
-                                <th style="font-size: 12px; height: 10px; width: 15%;">Tipo de Habitación</th>
-                                <th style="font-size: 12px; height: 10px; width: 15%;">Estado</th>
-                                <th style="font-size: 12px; height: 10px; width: 5%;">Editar</th>
-                                <th style="font-size: 12px; height: 10px; width: 5%;">Eliminar</th>     
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 10%;"># Habitación</th> 
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 50%;">Descripción</th> 
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Estado</th> 
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 10%;">Editar</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 10%;">Eliminar</th>                
                             </tr>                      
                     </thead>
-                    <tbody id="cuerpoTabla">                                  
+                    <tbody id="cuerpoHabs">                                  
                     </tbody>
                   </table>
                 </div>
@@ -120,7 +123,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="blue bigger">Registro de Habitaciones</h4>
+                      <h4 class="blue bigger">Registro de Huéspedes</h4>
                     </div>
 
                     <div class="modal-body">
@@ -140,7 +143,6 @@
                                     <div class="col-md-7">
                                         <input class="form-control" type="text" id="param_paterno" name="param_paterno" placeholder="Ingrese Apellido Paterno">
                                     </div>
-
                                 </div>
 
                                 <div class="form-group">
@@ -148,9 +150,7 @@
                                     <div class="col-md-7">
                                         <input class="form-control" type="text" id="param_materno" name="param_materno" placeholder="Ingrese Apellido Materno">
                                     </div>
-
-                                </div>                              
-                                
+                                </div>                                
 
                                 <div class="form-group">
                                     <label for="nombreEmpresa" class="col-md-4 control-label">Dni</label>
@@ -312,19 +312,19 @@
 
               </div>        
               <input type="hidden" dissabled="true" value="Administrador" id="NombreGrupo">
-              <input type="hidden" dissabled="true" value="Listar Empleados" id="NombreTarea">     
+              <input type="hidden" dissabled="true" value="Listar Huéspedes" id="NombreTarea">     
               <!-- FIN DE CONTENIDO DE PAGINA -->                                  
             </div><!-- /.col -->
           </div>
 
-                
+          <BR><BR><BR>      
         </div><!-- /.page-content -->             
         <div class="footer">
           <div class="footer-inner">
             <div class="footer-content">
               <span class="bigger-120">
-                <span class="blue bolder">BSE Events</span>
-                &copy; 2016
+                <span class="blue bolder">ROCEVIB</span>
+                &copy; 2017
               </span>           
             </div>
           </div>          

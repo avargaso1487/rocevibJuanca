@@ -1,5 +1,4 @@
 window.onload = function(){
-	//comboEvento();
 	mostrarDatos();	
 }
 
@@ -67,12 +66,12 @@ function mostrarDatos(){
 		data:{param_opcion: 'listarHabitaciones'},
 		url: '../../controller/controlusuario/usuario.php',
 		success: function(respuesta){
-			$('#example').DataTable().destroy();
-			$('#cuerpoTabla').html(respuesta);
-			$('#example').DataTable();
+			$('#habs').DataTable().destroy();
+			$('#cuerpoHabs').html(respuesta);
+			$('#habs').DataTable();
 		},
 		error: function(respuesta){
-			$('#cuerpoTabla').html(respuesta);
+			$('#cuerpoHabs').html(respuesta);
 		}
 	});	
 }

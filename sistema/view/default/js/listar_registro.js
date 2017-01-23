@@ -69,12 +69,12 @@ function mostrarDatos(){
 		data:{param_opcion: 'listarRegistro'},
 		url: '../../controller/controlusuario/usuario.php',
 		success: function(respuesta){
-			$('#example').DataTable().destroy();
-			$('#cuerpoTabla').html(respuesta);
-			$('#example').DataTable();
+			$('#reg').DataTable().destroy();
+			$('#cuerpoReg').html(respuesta);
+			$('#reg').DataTable();
 		},
 		error: function(respuesta){
-			$('#cuerpoTabla').html(respuesta);
+			$('#cuerpoReg').html(respuesta);
 		}
 	});	
 }
@@ -140,4 +140,21 @@ function mostrarMenu()
             $('#permisos').html(data);                
         }
     });
+}
+
+function mostrarDetalle(id){
+	var param_opcion = 'mostrarDetalle';
+	$.ajax({
+		type: 'POST',
+		data:'param_opcion='+param_opcion+'&id='+id,
+		url: '../../controller/controlusuario/usuario.php',
+		success: function(respuesta){
+			$('#regDetalle').DataTable().destroy();
+			$('#cuerpoRegDetalle').html(respuesta);
+			$('#regDetalle').DataTable();
+		},
+		error: function(respuesta){
+			$('#cuerpoRegDetalle').html(respuesta);
+		}
+	});	
 }
