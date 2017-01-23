@@ -96,7 +96,7 @@
               <div class="col-md-12">               
                 <div class="table-header">
                   HUÉSPEDES &nbsp;&nbsp;
-                  <a href='#modal-form' data-toggle='modal' class='white' onclick="limpiar();">
+                  <a href='#modal-form' data-toggle='modal' class='white' onclick="limpiarDatos();">
                               <i class='ace-icon fa fa-plus-circle bigger-150'></i>
                           </a>
                 </div>
@@ -105,11 +105,12 @@
                     <thead>                     
                             <tr>
                                 <th style="font-size: 12px; height: 10px; width: 5%;">ID</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Nombres</th> 
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Paterno</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Materno</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Editar</th>
-                                    <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Eliminar</th>                
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Nombres</th> 
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Apellidos</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Dirección</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 5%;">Celular</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Empresa</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Operaciones</th>                
                             </tr>                      
                     </thead>
                     <tbody id="cuerpoTabla">                                  
@@ -118,115 +119,24 @@
                 </div>
 
 
-                
+                   <!-- Modal Registro -->
               <div id="modal-form" class="modal fade" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="blue bigger">Registro de Huéspedes</h4>
+                      <h4 class="blue bigger" id="cabecera">
+                      </h4>
                     </div>
 
                     <div class="modal-body">
                       <div class="row">
-                      <form class="form-horizontal form-bordered" method="post" action="../../controller/controlMantenedores/ambiente_controller.php" onsubmit="return validarCampos()">
-                            
-                            
-                            <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Nombres</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_nombres" name="param_nombres" placeholder="Ingrese Nombres">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Apellido Paterno</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_paterno" name="param_paterno" placeholder="Ingrese Apellido Paterno">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="giro" class="col-md-4 control-label">Apellido Materno</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_materno" name="param_materno" placeholder="Ingrese Apellido Materno">
-                                    </div>
-                                </div>                                
-
-                                <div class="form-group">
-                                    <label for="nombreEmpresa" class="col-md-4 control-label">Dni</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="Nombre Dni" maxlength="8" onkeypress="return solonumeros(event)">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Dirección</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_direccion" name="param_direccion" placeholder="Ingrese Dirección">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Celular</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_celular" name="param_celular" placeholder="Ingrese número de celular">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Usuario</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="cel" id="param_usuario" name="param_usuario" placeholder="Ingrese usuario">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Contraseña</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="password" id="param_clave" name="param_clave" placeholder="Ingrese clave">
-                                    </div>
-                                </div>
-
-                            <div class="form-group">
-                                
-                                <div class="col-sm-1"></div>
-                                <input type="hidden" value="registrar" name="param_opcion">
-                                
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                  <center><button type="button" id="btn_cancelar_participante" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">Cancelar</button>
-                                    <input type="submit" value="Registrar" class="btn btn-primary mr-xs mb-sm buttonform" ></center>
-                                </div>
-                            </div>
-                            </form>
-
-                        </div>
+                      <div id="mensaje">
                       </div>
 
-                      
-                    </div>
-                  </div>
-                </div><!-- PAGE CONTENT ENDS -->
+                      <!--Formulario de Registro -->
+                      <form class="form-horizontal form-bordered" method="post" id="frm_nuevoHuesped">
 
-
-
-
-
-
-
-                <div id="modalEditarAmb" class="modal" tabindex="-1">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="blue bigger">Datos de Ambiente</h4>
-                      </div>
-
-                      <div class="modal-body">
-                        <div class="row">
-                          <form action="" method="POST" class="form-horizontal" id="form_nuevoUsuario">                                                                                 
                             <div class="form-group">
                                     <label for="ruc" class="col-md-4 control-label">Nombres</label>
                                     <div class="col-md-7">
@@ -250,11 +160,10 @@
 
                                 </div>                              
                                 
-
                                 <div class="form-group">
-                                    <label for="nombreEmpresa" class="col-md-4 control-label">Dni</label>
+                                    <label for="nombreEmpresa" class="col-md-4 control-label">DNI</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="Nombre Dni" maxlength="8" onkeypress="return solonumeros(event)">
+                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="DNI o Carnet de Extranjería" maxlength="8">
                                     </div>
                                 </div>
 
@@ -273,41 +182,57 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Usuario</label>
+                                <label for="param_empresa" class="col-md-4 control-label">Empresa</label>
+                                <div id="empresa" class="col-md-7">
+                                    <!--Reemplazar-->
+                                  <div class="input-group">                           
+                                    <select class="form-control" id="param_empresa" name="param_empresa">
+                                      <option value="" disabled selected style="display: none;">Seleccionar empresa</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+
+                                <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label" id="lbl_usuario">Usuario</label>
                                     <div class="col-md-7">
                                         <input class="form-control" type="cel" id="param_usuario" name="param_usuario" placeholder="Ingrese usuario">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Contraseña</label>
+                                    <label for="ruc" class="col-md-4 control-label" id="lbl_pass">Contraseña</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_clave" name="param_clave" placeholder="Ingrese clave">
+                                        <input class="form-control" type="password" id="param_clave" name="param_clave" placeholder="Ingrese clave">
                                     </div>
                                 </div>
 
-                            
-                            <div class="form-group">
-                                
-                                <div class="col-sm-1"></div>
-                                <input type="hidden" value="actualizar" name="param_opcion">
-                               <!--  <input type="hidden" dissabled="true" value="Mantenedores" id="NombreGrupo">
-                                <input type="hidden" dissabled="true" value="ambientes" id="NombreTarea"> -->
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <center><input type="submit" id="actualizar" value="Actualizar" class="btn btn-primary mr-xs mb-sm buttonform" ></center>
+                                <div>
+                                <input type="hidden" id="param_id" name="param_id">
                                 </div>
+                              <div class="form-group">
+                              <div class="col-md-12">
+                                <center>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="actualizarHuesped">ACTUALIZAR</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">CANCELAR</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="nuevoHuesped">REGISTRAR</button>
+                                  </center>
+                              </div>
                             </div>
                             </form>
 
-              </div>
-              </div>
+                        </div>
+                      </div>                      
+                    </div>
+                  </div>
+                </div><!-- PAGE CONTENT ENDS -->
 
-                      
-              </div>
-              </div>
-              </div><!-- PAGE CONTENT ENDS -->
+
+                <!--Fin de Modal Registro -->
+             
+
+
+
                 
 
 

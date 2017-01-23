@@ -8,8 +8,6 @@
   {
     date_default_timezone_set('America/Lima');
 ?>
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,41 +16,51 @@
     <link rel="shortcut icon" href="../../default/assets/ico/favicon.png">
     <title>ROCEVIB HOTEL</title>
     <!-- Tell the browser to be responsive to screen width -->
+    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="../default/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../default/assets/font-awesome/4.2.0/css/font-awesome.min.css" />
+
     <!-- text fonts -->
     <link rel="stylesheet" href="../default/assets/fonts/fonts.googleapis.com.css" />
+
     <!-- ace styles -->
     <link rel="stylesheet" href="../default/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+
     <!-- ace settings handler -->
     <script src="../default/assets/js/ace-extra.min.js"></script>
     <style type="text/css">
         .datepicker{z-index:1151 !important;}
-    </style>        
-  </head>
-  
+    </style>
 
-  <!-- Cuerpo -->
+          
+  </head>
   <body class="no-skin">
     <?php 
-    require('../sup_layout.php'); // Theme 
+    require('../sup_layout.php');
      ?>
 
     <div class="main-container" id="main-container">
       <script type="text/javascript">
         try{ace.settings.check('main-container' , 'fixed')}catch(e){}
       </script>
+
       <div id="sidebar" class="sidebar                  responsive">
         <script type="text/javascript">
           try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
         </script>       
+
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
           <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
         </div>
         <ul class="nav nav-list" id="permisos">
+        
         </ul><!-- /.nav-list -->
+
+
         <script type="text/javascript">
           try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
         </script>
@@ -66,53 +74,52 @@
             </script>
 
             <ul class="breadcrumb">
-              <li>
-                  <i class="ace-icon fa fa-home home-icon"></i>Administrador
-              </li>
-              <li><a href="listar_empleados.php">Empleados</a></li>
-              <li>
-                  <span class="invoice-info-label">Fecha:</span>
-                  <span class="blue"><?php echo date('d-m-Y'); ?></span>
-              </li>                            
-              
-            </ul><!-- /.breadcrumb -->        
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>Administrador
+                            </li>
+                            <li><a href="listar_empresas.php">Empresas</a></li>
+                            <li>
+                                <span class="invoice-info-label">Fecha:</span>
+                                <span class="blue"><?php echo date('d-m-Y'); ?></span>
+                            </li>                            
+                            
+                        </ul><!-- /.breadcrumb -->        
           </div>
 
           <div class="page-content">          
             <div class="page-header">
               <h1>
-                Empleados Registrados
+                Empresas
               </h1>
             </div><!-- /.page-header -->
             <div class="row">
-
               <div class="col-md-12">               
                 <div class="table-header">
-                  EMPLEADOS &nbsp;&nbsp;
+                  EMPRESAS &nbsp;&nbsp;
                   <a href='#modal-form' data-toggle='modal' class='white' onclick="limpiarDatos();">
                               <i class='ace-icon fa fa-plus-circle bigger-150'></i>
                           </a>
                 </div>
-
                 <div>
-                  <table id="example" class="table table-striped table-bordered">
+                  <table id="empresas" class="table table-striped table-bordered">
                     <thead>                     
-                      <tr>
-                        <th style="font-size: 12px; height: 10px; width: 5%;">ID</th>
-                        <th style="text-align: center; font-size: 12px; height: 10px; width: 20%;">Nombres</th> 
-                        <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Paterno</th>
-                        <th style="text-align: center; font-size: 12px; height: 10px; width: 15%;">Apellido Materno</th>
-                        <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Editar</th>
-                        <th style="text-align: center; font-size: 12px; height: 10px; width: 7%;">Eliminar</th>                
-                      </tr>                      
+                            <tr>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 10%;">ID</th> 
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 30%;">Razón Social</th> 
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 10%;">RUC</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 30%;">Dirección Legal</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 10%;">Actividad Comercial</th>  
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 5%;">Editar</th>
+                                <th style="text-align: center; font-size: 12px; height: 10px; width: 5%;">Eliminar</th>                
+                            </tr>                      
                     </thead>
-                    <tbody id="cuerpoTabla">                                  
+                    <tbody id="cuerpoEmpresas">                                  
                     </tbody>
                   </table>
                 </div>
 
 
-              <!-- Modal Registro -->
+            <!-- Modal Registro -->
               <div id="modal-form" class="modal fade" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -128,75 +135,48 @@
                       </div>
 
                       <!--Formulario de Registro -->
-                      <form class="form-horizontal form-bordered" method="post" id="frm_nuevoEmpleado">
+                      <form class="form-horizontal form-bordered" method="post" id="frm_empresa">
 
                             <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Nombres</label>
+                                    <label for="ruc" class="col-md-4 control-label">Razón Social</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_nombres" name="param_nombres" placeholder="Ingrese Nombres">
+                                        <input class="form-control" type="text" id="param_razonSocial" name="param_razonSocial" placeholder="Ingrese Razón Social">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Apellido Paterno</label>
+                                    <label for="ruc" class="col-md-4 control-label">RUC</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_paterno" name="param_paterno" placeholder="Ingrese Apellido Paterno">
+                                        <input class="form-control" type="text" id="param_ruc" name="param_ruc" placeholder="Ingrese Apellido Paterno" maxlength="11">
                                     </div>
 
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="giro" class="col-md-4 control-label">Apellido Materno</label>
+                                    <label for="giro" class="col-md-4 control-label">Dirección Legal</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_materno" name="param_materno" placeholder="Ingrese Apellido Materno">
+                                        <input class="form-control" type="text" id="param_direccion" name="param_direccion" placeholder="Ingrese Apellido Materno">
                                     </div>
 
                                 </div>                              
                                 
                                 <div class="form-group">
-                                    <label for="nombreEmpresa" class="col-md-4 control-label">DNI</label>
+                                    <label for="nombreEmpresa" class="col-md-4 control-label">Actividad Comercial</label>
                                     <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="DNI o Carnet de Extranjería" maxlength="8">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Dirección</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_direccion" name="param_direccion" placeholder="Ingrese Dirección">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label">Celular</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="text" id="param_celular" name="param_celular" placeholder="Ingrese número de celular">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label" id="lbl_usuario">Usuario</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="cel" id="param_usuario" name="param_usuario" placeholder="Ingrese usuario">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="ruc" class="col-md-4 control-label" id="lbl_pass">Contraseña</label>
-                                    <div class="col-md-7">
-                                        <input class="form-control" type="password" id="param_clave" name="param_clave" placeholder="Ingrese clave">
+                                        <input class="form-control" type="text" id="param_aComercial" name="param_aComercial" placeholder="Ingrese Actividad Comercial">
                                     </div>
                                 </div>
 
                                 <div>
                                 <input type="hidden" id="param_id" name="param_id">
                                 </div>
+
                               <div class="form-group">
                               <div class="col-md-12">
                                 <center>
-                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="actualizarEmpleado">ACTUALIZAR</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="actualizarEmpresa">ACTUALIZAR</button>
                                 <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">CANCELAR</button>
-                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="nuevoEmpleado">REGISTRAR</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="nuevaEmpresa">REGISTRAR</button>
                                   </center>
                               </div>
                             </div>
@@ -211,19 +191,21 @@
 
                 <!--Fin de Modal Registro -->
 
-              </div>
                      
+              </div>
+              </div>
+              </div><!-- PAGE CONTENT ENDS -->
+                
+
+
+              </div>        
               <input type="hidden" dissabled="true" value="Administrador" id="NombreGrupo">
-              <input type="hidden" dissabled="true" value="Listar Empleados" id="NombreTarea">     
-              <!-- FIN DE CONTENIDO DE PAGINA -->   
-
-
+              <input type="hidden" dissabled="true" value="Listar Empresas" id="NombreTarea">     
+              <!-- FIN DE CONTENIDO DE PAGINA -->                                  
             </div><!-- /.col -->
           </div>
 
-
-<BR><BR><BR>  
-                
+          <BR><BR><BR>      
         </div><!-- /.page-content -->             
         <div class="footer">
           <div class="footer-inner">
@@ -267,7 +249,7 @@
     <script src="../default/assets/js/ace-elements.min.js"></script>
     <script src="../default/assets/js/ace.min.js"></script>
         
-    <script src="../default/js/listar_empleados.js"></script>
+    <script src="../default/js/listar_empresas.js"></script>
 
     <script type="text/javascript">           
           function solonumeros(e) {

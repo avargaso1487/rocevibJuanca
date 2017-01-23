@@ -35,22 +35,33 @@ class Usuario_model{
 				break;
 
 
+
 		//Funciones Registro
 			case "nuevoEmpleado";
-				echo $this->nuevoEmpleado();
+				echo $this->nuevoUsuario2();
 				break;
 
-			case "nuevoUsuario";
-				echo $this->nuevoUsuario();
+			case "nuevoHuesped";
+				echo $this->nuevoUsuario3();
+				break;
+
+			case "nuevaEmpresa";
+				echo $this->nuevaEmpresa();
 				break;
 
 
 
-			case "editarEmpleado";
+			case "editarEmpleado"; //Mostrar los datos del Empleado al editar
 				echo $this->editarEmpleado();
+				break;
+			case "actualizarUsuario"; //Actualizar los datos 
+				echo $this->actualizarUsuario();
 				break;
 			case "eliminarUsuario";
 				echo $this->eliminarUsuario();
+				break;
+			case "eliminarEmpresa";
+				echo $this->eliminarEmpresa();
 				break;
 
 		//Funciones Listar
@@ -66,8 +77,29 @@ class Usuario_model{
 			case "listarRegistro";
 				echo $this->listarRegistro();
 				break;
+			case "listarEmpresas";
+				echo $this->listarEmpresas();
+				break;
+
+
+			//Mostrar
 			case "mostrarDetalle";
 				echo $this->mostrarDetalle();
+				break;
+
+			case "mostrarHuespedes";
+				echo $this->mostrarHuespedes();
+				break;
+			case "mostrarServicios";
+				echo $this->mostrarServicios();
+				break;
+
+			case "comboEmpresa";
+				echo $this->comboEmpresa();
+				break;
+
+			case "numero_registro";
+				echo $this->numero_registro();
 				break;
 		}
 	}
@@ -87,7 +119,7 @@ class Usuario_model{
 		$consultaSql.="'".$this->param['param_id2']."',";
 		$consultaSql.="'".$this->param['param_usuUsuario']."',";
 		$consultaSql.="'".$this->param['param_usuClave']."')";
-		echo $consultaSql;		
+		//echo $consultaSql;		
 		$this->result = mysqli_query($this->conexion,$consultaSql);
     }
 
@@ -114,6 +146,21 @@ class Usuario_model{
 		$consultaSql.="'".$this->param['param_usuario']."',";
 		$consultaSql.="'".$this->param['param_clave']."',";
 		$consultaSql.="'".$this->param['param_empresa']."',";
+		$consultaSql.="'".$this->param['param_id2']."')";
+		//echo $consultaSql;
+		$this->result = mysqli_query($this->conexion,$consultaSql);
+
+    }
+
+    function prepararRegistroEmpresa($opcion) 
+	{
+
+		$consultaSql = "call sp_gestionar_empresa(";
+		$consultaSql.="'".$opcion."',";
+		$consultaSql.="'".$this->param['param_razonSocial']."',";
+		$consultaSql.="'".$this->param['param_ruc']."',";
+		$consultaSql.="'".$this->param['param_direccion']."',";
+		$consultaSql.="'".$this->param['param_aComercial']."',";
 		$consultaSql.="'".$this->param['param_id2']."')";
 		//echo $consultaSql;
 		$this->result = mysqli_query($this->conexion,$consultaSql);
@@ -169,27 +216,40 @@ class Usuario_model{
     }
 
 
-    function nuevoEmpleado() {
-		$this->prepararRegistroUsuario('opc_nuevoEmpleado');
+    function nuevoUsuario2() {
+		$this->prepararRegistroUsuario('opc_nuevoUsuario2');
 		echo 1;
     }
 
-    function nuevoUsuario() {
-		$this->prepararRegistroUsuario('opc_usuario_registrar2');
+    function nuevoUsuario3() {
+		$this->prepararRegistroUsuario('opc_nuevoUsuario3');
 		echo 1;
     }
 
-
+    function nuevaEmpresa() {
+		$this->prepararRegistroEmpresa('opc_nuevaEmpresa');
+		echo 1;
+    }
 
 	function editarEmpleado() {
 		$this->prepararConsultaUsuario('opc_empleado_buscar');
-		$row = mysqli_fetch_row($this->result);
-		echo $row;
+		 while ($row = mysqli_fetch_row($this->result)) {
+                        echo json_encode($row);
+        	}
 		
+    }
+
+    function actualizarUsuario() {
+		$this->prepararRegistroUsuario('opc_usuario_actualizar');
     }
 
     function eliminarUsuario() {
 		$this->prepararRegistroUsuario('opc_usuario_eliminar');
+		echo 1;
+    }
+
+    function eliminarEmpresa() {
+		$this->prepararRegistroEmpresa('opc_empresa_eliminar');
 		echo 1;
     }
 
@@ -215,18 +275,17 @@ class Usuario_model{
 	function listarHuespedes() {
     	$this->prepararConsultaUsuario('opc_huesped_listar');    	
     	while($row = mysqli_fetch_row($this->result)){
-			echo '<tr>					
-					<td style="font-size: 12px; height: 10px; width: 4%;">'.$row[0].'</td>					
-					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[1].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[3].'</td>
-					<td syle="height: 10px; width: 5%;">
+			echo '<tr>		
+					<td style="font-size: 12px; height: 10px; width: 5%;">'.$row[0].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[1].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[2].'</td>
+					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[3].'</td>
+					<td style="font-size: 12px; height: 10px; width: 5%;">'.$row[4].'</td>
+					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[5].'</td>
+					<td syle="height: 10px; width: 15%;">
 					<a class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-pencil" title="Editar" onclick="editarh('.$row[0].');" /></span></a>
-								
-					</td>
-					<td syle="height: 10px; width: 5%;">
-						<a id="eliminar_usuario" class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-remove-circle" title="Eliminar" onclick="eliminarh('.$row[0].');"/></span></a>				
-					</td>					
+					<a id="eliminar_usuario" class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-remove-circle" title="Eliminar" onclick="eliminarh('.$row[0].');"/></span></a>			
+					</td>				
 				</tr>';
 		}
 	}
@@ -250,13 +309,15 @@ class Usuario_model{
 	}
 
 
-	function listarAmbientes() {
-    	$this->prepararConsultaUsuario('opc_ambientes_listar');    	
+	function listarEmpresas() {
+    	$this->prepararConsultaUsuario('opc_empresas_listar');    	
     	while($row = mysqli_fetch_row($this->result)){
 			echo '<tr>					
-					<td style="font-size: 12px; height: 10px; width: 4%;">'.$row[0].'</td>					
-					<td style="font-size: 12px; height: 10px; width: 20%;">'.$row[1].'</td>
-					<td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[0].'</td>					
+					<td style="font-size: 12px; height: 10px; width: 30%;">'.$row[1].'</td>
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[2].'</td>
+					<td style="font-size: 12px; height: 10px; width: 30%;">'.$row[3].'</td>
+					<td style="font-size: 12px; height: 10px; width: 10%;">'.$row[4].'</td>
 
 					<td syle="height: 10px; width: 5%;">
 					<a class="btn btn-link btn-xs col-md-offset-4"><span class="glyphicon glyphicon-pencil" title="Editar" onclick="editar('.$row[0].');" /></span></a>
@@ -300,12 +361,104 @@ class Usuario_model{
 	}
 
 
+
+
+
+
+
+
+	function prepararConsultasMostrar($opcion) 
+	{
+		$consultaSql = "call sp_mostrar(";
+		$consultaSql.="'".$opcion."',";
+		$consultaSql.="'".$this->param['param_id2']."',";
+		$consultaSql.="'".$this->param['param_usuUsuario']."',";
+		$consultaSql.="'".$this->param['param_usuClave']."')";
+		//echo $consultaSql;		
+		$this->result = mysqli_query($this->conexion,$consultaSql);
+    }
+
 	function mostrarUsuario() {
     	$this->prepararEditarUsuario('opc_usuario_mostrar');    	
     	$row = mysqli_fetch_row($this->result);
 		echo json_encode($row);
 		
-	}   
+	}
+
+	function mostrarHuespedes() {
+        $this->prepararConsultasMostrar('opc_mostrar_huespedes');
+        $this->cerrarAbrir();            
+        while($row = mysqli_fetch_row($this->result)){                              
+            echo '<tr>
+                <td style="font-size: 12px; height: 10px; width: 15%;">'.$row[0].'</td> 
+                <td style="font-size: 12px; height: 10px; width: 85%;">'.$row[1].'</td>';                     
+        }
+    }
+
+
+	function mostrarServicios() {
+        $this->prepararConsultasMostrar('opc_mostrar_servicios');
+        $this->cerrarAbrir();            
+        while($row = mysqli_fetch_row($this->result)){                              
+            echo '<tr>
+                <td style="font-size: 12px; height: 10px; width: 15%;">'.$row[0].'</td>
+                <td style="font-size: 12px; height: 10px; width: 65%;">'.$row[1].'</td> 
+                <td style="font-size: 12px; height: 10px; width: 15%;">'.$row[2].'</td>';                     
+        }
+    }
+
+	function numero_registro() {
+            $this->prepararConsultasMostrar('opc_reg_respuesta');
+            $respuesta = $this->ejecutarConsultaRespuesta();
+            echo $respuesta;
+        }
+
+
+
+
+
+
+
+
+
+
+	function comboEmpresa()
+    {
+            $this->prepararConsultaUsuario('opc_combo_empresa');
+            $this->cerrarAbrir();
+            $datos = $this->getArrayEmpresa();
+            echo    '<div class="input-group col-md-8">                        
+                        <select class="form-control" name="param_empresa" id="param_empresa">
+                            <option value=""  disabled selected style="display: none;">Seleccionar empresa</option>';
+            for($i=0; $i<count($datos); $i++)
+            {
+                     echo "<option value='".utf8_decode($datos[$i]["idEmpresa"])."'>".($datos[$i]["razonSocial"])."</option>";
+            }
+                 echo '</select>
+                    </div>';
+        
+    }   
+
+    private function getArrayEmpresa()
+    {
+        $datos = array();
+        while($fila = mysqli_fetch_array($this->result))
+        {
+            array_push($datos, array(
+                "idEmpresa" => $fila["idEmpresa"],
+                "razonSocial" => $fila["razonSocial"]));
+        }
+        return $datos;
+    }
+
+
+
+
+
+
+
+
+
 
 }
 

@@ -32,7 +32,74 @@
         .datepicker{z-index:1151 !important;}
     </style>        
 
-          
+        <script language="javascript" type="text/javascript"> 
+  var CronoID = null 
+  var CronoEjecutandose = false 
+  var decimas, segundos, minutos 
+
+  function DetenerCrono (){ 
+         if(CronoEjecutandose) 
+             clearTimeout(CronoID) 
+         CronoEjecutandose = false 
+  } 
+
+  function InicializarCrono () { 
+      //inicializa contadores globales 
+      decimas = 0 
+      segundos = 0 
+      minutos = 0 
+       
+      //pone a cero los marcadores 
+      document.crono.display.value = '00:00:0' 
+      document.crono.parcial.value = '00:00:0' 
+  } 
+
+  function MostrarCrono () { 
+              
+         //incrementa el crono 
+         decimas++ 
+      if ( decimas > 9 ) { 
+          decimas = 0 
+          segundos++ 
+          if ( segundos > 59 ) { 
+              segundos = 0 
+              minutos++ 
+              if ( minutos > 99 ) { 
+                  alert('Fin de la cuenta') 
+                  DetenerCrono() 
+                  return true 
+              } 
+          } 
+      } 
+
+      //configura la salida 
+      var ValorCrono = "" 
+      ValorCrono = (minutos < 10) ? "0" + minutos : minutos 
+      ValorCrono += (segundos < 10) ? ":0" + segundos : ":" + segundos 
+      ValorCrono += ":" + decimas     
+               
+        document.crono.display.value = ValorCrono 
+
+        CronoID = setTimeout("MostrarCrono()", 100) 
+      CronoEjecutandose = true 
+      return true 
+  } 
+
+  function IniciarCrono () { 
+       DetenerCrono() 
+       InicializarCrono() 
+      MostrarCrono() 
+  } 
+
+  function ObtenerParcial() { 
+      //obtiene cuenta parcial 
+      document.crono.parcial.value = document.crono.display.value 
+  } 
+
+
+
+
+</script>  
   </head>
 
  <body class="no-skin">
@@ -75,7 +142,20 @@
                     <a href="../home/home.php">Home</a>
                 </li>
                 <li>Mantenedor</li>
-                <li>Clientes</li>
+                <li>Registro</li>
+                <li>
+                  <div class="form-group col-md-offset-2"> 
+                    <form name="crono" class="form-horizontal"> 
+                    
+                      <input type="text" size="8" name="display" value="00:00:0"> 
+                      <input type="button" name="Iniciar" value=" Iniciar " onClick="IniciarCrono()">
+                      <input type="button" name="Parar" value=" Parar " onClick="DetenerCrono()"> 
+                      <input type="button" name="Cero" value="  Cero  " onClick="DetenerCrono(); InicializarCrono()">
+                      <input type="text" size="8" name="parcial" value="00:00:0 " style="visibility: hidden;" > 
+                      <input type="button" name="Parcial" value="Parcial" onClick="ObtenerParcial()" style="visibility: hidden;">
+                    </form> 
+                  </div> 
+                </li>
             </ul><!-- /.breadcrumb -->
 
         </div>
@@ -83,7 +163,7 @@
         <div class="page-content">
             <div class="page-header">
                 <h1>
-                    <b>CLIENTES</b>
+                    <b>HUÉSPEDES</b>
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
                         Registro / Actualización de Datos
@@ -96,13 +176,26 @@
                     </div>
                 </div>
 
+
+
             </div><!-- /.page-header -->
             <div class="row">
               <div class="col-xs-12">
-                              
+
+                <!--Antes de.... -->
+                <div class="col-md-offset-5" align="right">
+                    <a id="modalEmpresa" class="btn btn-sm btn-warning" data-target='#modal-form-empresa' data-toggle='modal' onclick="limpiarEmpresa();">
+                        <i class="ace-icon fa fa-plus bigger-110"></i> NUEVA EMPRESA 
+                    </a> 
+
+                   <a id="modalHuesped" class="btn btn-sm btn-warning" data-target='#modal-form-huesped' data-toggle='modal' onclick="limpiarHuesped();">
+                        <i class="ace-icon fa fa-plus bigger-110"></i> NUEVO HUÉSPED 
+                    </a> 
+                </div><br>
+
                 <!-- PAGE CONTENT BEGINS -->
                 <div class="table-header">
-                  HUESPEDES REGISTRADOS &nbsp;&nbsp;
+                  LISTA DE REGISTROS &nbsp;&nbsp;
                   <a href='nuevo_registro.php'  class='white' >
                               <i class='ace-icon fa fa-plus-circle bigger-150'></i>
                           </a>
@@ -157,6 +250,180 @@
 
 
     </div><!-- /.page-content -->
+
+
+
+<!-- Modal Registro HUESPEDES-->
+              <div id="modal-form-huesped" class="modal fade" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="blue bigger" id="cabecera">
+                      NUEVO HUÉSPED
+                      </h4>
+                    </div>
+
+                    <div class="modal-body">
+                      <div class="row">
+                      <div id="mensajeHuesped">
+                      </div>
+
+                      <!--Formulario de Registro -->
+                      <form class="form-horizontal form-bordered" method="post" id="frm_huesped">
+
+                            <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label">Nombres</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_nombres" name="param_nombres" placeholder="Ingrese Nombres">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label">Apellido Paterno</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_paterno" name="param_paterno" placeholder="Ingrese Apellido Paterno">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="giro" class="col-md-4 control-label">Apellido Materno</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_materno" name="param_materno" placeholder="Ingrese Apellido Materno">
+                                    </div>
+
+                                </div>                              
+                                
+                                <div class="form-group">
+                                    <label for="nombreEmpresa" class="col-md-4 control-label">DNI</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_dni" name="param_dni" placeholder="DNI o Carnet de Extranjería" maxlength="8">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label">Dirección</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_direccion" name="param_direccion" placeholder="Ingrese Dirección">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label">Celular</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_celular" name="param_celular" placeholder="Ingrese número de celular">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                <label for="param_empresa" class="col-md-4 control-label">Empresa</label>
+                                <div id="empresa" class="col-md-7">
+                                    <!--Reemplazar-->
+                                  <div class="input-group">                           
+                                    <select class="form-control" id="param_empresa" name="param_empresa">
+                                      <option value="" disabled selected style="display: none;">Seleccionar empresa</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+
+                             <div>
+                                <input type="hidden" id="param_id" name="param_id">
+                                </div>
+                              <div class="form-group">
+                              <div class="col-md-12">
+                                <center>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">CANCELAR</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="nuevoHuesped">REGISTRAR</button>
+                                  </center>
+                              </div>
+                            </div>
+                            </form>
+
+                        </div>
+                      </div>                      
+                    </div>
+                  </div>
+                </div><!-- PAGE CONTENT ENDS -->
+
+
+                <!--Fin de Modal Registro -->
+
+
+
+            <!-- Modal Registro empresa -->
+              <div id="modal-form-empresa" class="modal fade" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="blue bigger" id="cabecera"> NUEVA EMPRESA
+                      </h4>
+                    </div>
+
+                    <div class="modal-body">
+                      <div class="row">
+
+                      <div id="mensajeEmpresa">
+                      </div>
+
+                      <!--Formulario de Registro -->
+                      <form class="form-horizontal form-bordered" method="post" id="frm_empresa">
+
+                            <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label">Razón Social</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_razonSocial" name="param_razonSocial" placeholder="Ingrese Razón Social">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ruc" class="col-md-4 control-label">RUC</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_ruc" name="param_ruc" placeholder="Ingrese Apellido Paterno" maxlength="11">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="giro" class="col-md-4 control-label">Dirección Legal</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_direccionLegal" name="param_direccion" placeholder="Ingrese Dirección Legal">
+                                    </div>
+
+                                </div>                              
+                                
+                                <div class="form-group">
+                                    <label for="nombreEmpresa" class="col-md-4 control-label">Actividad Comercial</label>
+                                    <div class="col-md-7">
+                                        <input class="form-control" type="text" id="param_aComercial" name="param_aComercial" placeholder="Ingrese Actividad Comercial">
+                                    </div>
+                                </div>
+
+                                <div>
+                                <input type="hidden" id="param_id" name="param_id">
+                                </div>
+
+                              <div class="form-group">
+                              <div class="col-md-12">
+                                <center>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" data-dismiss="modal">CANCELAR</button>
+                                <button type="button" class="btn btn-primary mr-xs mb-sm buttonform" id="nuevaEmpresa">REGISTRAR</button>
+                                  </center>
+                              </div>
+                            </div>
+                            </form>
+
+                        </div>
+                      </div>                      
+                    </div>
+                  </div>
+                </div><!-- PAGE CONTENT ENDS -->
+
+
+                <!--Fin de Modal Registro -->
+
 
 
 <br><br><br>
@@ -223,8 +490,8 @@
     <script src="../default/assets/js/jquery.autosize.min.js"></script>
     <script src="../default/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
 
-    <--!<script src="../default/js/listar_registro.js"></script>    -->
-    <script src="../default/js/ventaTienda.js"></script>
+    <script src="../default/js/listar_registro.js"></script> 
+    <!-- <script src="../default/js/ventaTienda.js"></script> -->
 
     <!-- page specific plugin scripts -->
     <!-- ace scripts -->

@@ -17,7 +17,11 @@ $param['param_clave'] = '';
 $param['param_usuUsuario']='';
 $param['param_usuClave']='';
 $param['param_idtipo'] = 1;
-$param['param_empresa']=0;
+$param['param_empresa']=null;
+$param['param_razonSocial']='';
+$param['param_aComercial']='';
+$param['param_ruc']='';
+$param['param_direccionLegal']='';
 
 $param['param_id']='';
 $param['param_id2']='';
@@ -77,6 +81,20 @@ if (isset($_POST['param_id']))
 
 if (isset($_POST['id']))
     $param['param_id2'] = $_POST['id'];
+
+if (isset($_POST['param_razonSocial']))
+    $param['param_razonSocial'] = $_POST['param_razonSocial'];
+
+if (isset($_POST['param_aComercial']))
+    $param['param_aComercial'] = $_POST['param_aComercial'];
+
+if (isset($_POST['param_direccionLegal']))
+    $param['param_direccionLegal'] = $_POST['param_direccionLegal'];
+
+if (isset($_POST['param_ruc']))
+    $param['param_ruc'] = $_POST['param_ruc'];
+
+
 
 $Usuario = new Usuario_model();
 echo $Usuario->gestionar($param);

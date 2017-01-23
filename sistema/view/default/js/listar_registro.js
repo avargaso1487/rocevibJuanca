@@ -6,46 +6,37 @@ window.onload = function(){
 }
 
 $(function() {
-	$('#new_usuario').on('click', function(){
-		$('#modalUsuario').modal({
-			show:true,
-			backdrop:'static',
-		});
-		$('#cabeceraRegistro').html(".:: Nuevo Usuario ::.");
-		$('#param_opcion').val('nuevoUsuario');
-		$("#param_dni").val('');
-		$("#param_paterno").val('');
-		$("#param_materno").val('');
-		$("#param_nombres").val('');
-	});
-
-	$('#registroUsuario').on('click', function(){
+	$('#nuevaEmpresa').on('click', function(){
 		//alert('HOLA Xd');
-		var nombres = $('#param_nombres').val();
-		var paterno = $('#param_paterno').val();
-		var materno = $('#param_materno').val();
-		var dni = $('#param_dni').val();
-		var direccion = $('#param_direccion').val();
-		var usuario = $('#param_usuUsuario').val();
-		var clave = $('#param_usuClave').val();
-        
-		if (dni.length == 0 || paterno.length == 0 || materno.length == 0 || nombres.length == 0 || usuario.length == 0 || clave.length == 0 ) {           
-            $("#mensaje").html('<p class="alert alert-danger text-center"> Por favor, ingrese todos los datos.</p>').show(200).delay(3500).hide(200);
+
+		var razonSocial= $('#param_razonSocial').val();
+		var direccion= $('#param_direccionLegal').val();
+		var ruc= $('#param_ruc').val();
+		var aComercial= $('#param_aComercial').val();
+
+		//$('#param_id').val(idecito);
+		//alert(idecito);
+		//alert(nombres+paterno+materno+dni+direccion+celular+usuario+clave);
+      
+		if (razonSocial.length==0 || direccion.length==0 || ruc.length==0) 
+		{           
+        	$("#mensajeEmpresa").html('<p class="alert alert-danger text-center"> Ingrese todos los datos necesarios.</p>').show(100).delay(1500).hide(100);
         } else {
+
         	$.ajax({
 		        type: 'POST',        
-		        data: $('#form_nuevoUsuario').serialize(),
+		        data: $('#frm_empresa').serialize()+'&param_opcion=nuevaEmpresa',
 		        url: '../../controller/controlusuario/usuario.php',
 		        success: function(data){
-		            $("#mensaje").html('<p class="alert alert-success text-center">Registro Correcto</p>').show()
+		            $("#mensajeEmpresa").html('<p class="alert alert-success text-center">Registro Correcto</p>').show(100).delay(1500).hide(100);
 		                        //window.location = "../index.php";
-		            $('#param_opcion').val('nuevoUsuario');
-					$("#param_dni").val('');
-					$("#param_id").val('');
-					$("#param_paterno").val('');
-					$("#param_materno").val('');
-					$("#param_nombres").val('');
-					setTimeout("location.href='../operaciones/listar_empleados.php'",1000)        
+		            $('#param_opcion').val('nuevoEmpresa');
+		            $('#param_razonSocial').val('');
+		            $('#param_direccionLegal').val('');
+		            $('#param_ruc').val('');
+		            $('#param_aComercial').val('');
+
+					setTimeout(function () {$("#modal-form-empresa").modal("hide");},1000)        
 
 		        },
 		        error: function(data){
@@ -56,10 +47,60 @@ $(function() {
 		
 	});
 
-	$('#registroCancelar').on('click', function(){
+});
+
+$(function() {
+	
+	//MODA NUEVO HUESPED
+	$('#nuevoHuesped').on('click', function(){
 		//alert('HOLA Xd');
-		setTimeout("location.href='../operaciones/listar_empleados.php'",1)
+
+		var id = $('#param_id2').val();
+		var nombres = $('#param_nombres').val();
+		var paterno = $('#param_paterno').val();
+		var materno = $('#param_materno').val();
+		var dni = $('#param_dni').val();
+		var direccion = $('#param_direccion').val();
+		var celular = $('#param_celular').val();
+
+		var empresa = $('#param_empresa').val();
+
+		//$('#param_id').val(idecito);
+		//alert(idecito);
+		//alert(nombres+paterno+materno+dni+direccion+celular+usuario+clave);
+      
+		if (dni.length == 0 || paterno.length == 0 || materno.length == 0 || nombres.length == 0) 
+		{           
+        	$("#mensajeHuesped").html('<p class="alert alert-danger text-center"> Ingrese todos los datos necesarios.</p>').show(100).delay(1500).hide(100);
+        } else {
+
+        	$.ajax({
+		        type: 'POST',        
+		        data: $('#frm_huesped').serialize()+'&param_opcion=nuevoHuesped',
+		        url: '../../controller/controlusuario/usuario.php',
+		        success: function(data){
+		            $("#mensajeHuesped").html('<p class="alert alert-success text-center">Registro Correcto</p>').show(100).delay(1500).hide(100);
+		                        //window.location = "../index.php";
+		            $('#param_opcion').val('nuevoHuesped');
+		            $("#param_nombres").val('');					
+					$("#param_paterno").val('');
+					$("#param_materno").val('');
+					$("#param_dni").val('');
+					$("#param_direccion").val('');
+					$("#param_celular").val('');
+					$("#param_empresa").val('');
+					setTimeout(function () {$("#modal-form-huesped").modal("hide");},1000)      
+
+		        },
+		        error: function(data){
+		                   
+		        } 
+			});
+        }
+		
 	});
+
+	
 
 });
 
@@ -157,4 +198,44 @@ function mostrarDetalle(id){
 			$('#cuerpoRegDetalle').html(respuesta);
 		}
 	});	
+}
+
+
+function comboEmpresa(){ 	
+    var param_opcion = 'comboEmpresa'; 
+    $.ajax({
+        type: 'POST',        
+        data:'param_opcion='+param_opcion,
+        url: '../../controller/controlUsuario/usuario.php',
+        success: function(data){
+            $('#param_empresa').html(data);         
+
+        },
+        error: function(data){
+                   
+        }
+    });    
+}
+
+
+function limpiarHuesped()
+{
+	comboEmpresa();
+	$("#param_id").val('');
+	$("#param_nombres").val('');
+	$("#param_paterno").val('');
+	$("#param_materno").val('');
+	$("#param_dni").val('');
+	$("#param_direccion").val('');
+	$("#param_celular").val('');
+}
+
+function limpiarEmpresa()
+{
+	$("#param_id").val('');
+	$("#param_razonSocial").val('');
+	$("#param_ruc").val('');
+	$("#param_direccion").val('');
+	$("#param_aComercial").val('');
+  	$("#nuevaEmpresa").css('visibility','visible');
 }
